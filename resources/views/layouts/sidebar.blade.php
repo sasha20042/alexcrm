@@ -2,11 +2,13 @@
   
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-      <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-laugh-wink"></i>
+      <div class="sidebar-brand-icon">
+          <!-- Ваш логотип у форматі зображення -->
+          <img src="{{ asset('admin_assets/img/logom.jpg') }}" alt="Логотип" style="max-width: 100%; height: auto;">
       </div>
-      <div class="sidebar-brand-text mx-3">Alexxquality</div>
-    </a>
+      
+  </a>
+  
     
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -14,21 +16,25 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
       <a class="nav-link" href="{{ route('dashboard') }}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Головна</span></a>
-    </li>
-    
-    <li class="nav-item">
+          <i class="fas fa-fw fa-home"></i>
+          <span>Дашборд</span>
+      </a>
+  </li>
+  
+  <li class="nav-item">
       <a class="nav-link" href="{{ route('products') }}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Клієнти</span></a>
-    </li>
-    
-    <li class="nav-item">
+          <i class="fas fa-fw fa-users"></i>
+          <span>Клієнти</span>
+      </a>
+  </li>
+  
+  <li class="nav-item">
       <a class="nav-link" href="/profile">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Профіль</span></a>
-    </li>
+          <i class="fas fa-fw fa-user"></i>
+          <span>Профіль</span>
+      </a>
+  </li>
+  
     
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
