@@ -23,7 +23,16 @@
                 <input type="text" name="manager" class="form-control" placeholder="Менеджер">
             </div>
             <div class="col">
-                <textarea class="form-control" name="description" placeholder="Стан"></textarea>
+                 <select name="description" required="required" class="form-control">
+                        <option value="На опрацюванні">На опрацюванні</option>
+                        <option value="Відправлено на роботу">Відправлено на роботу</option>
+                        <option value="На резерв">На резерв</option>
+                        <option value="Відмовився">Відмовився</option>
+                        <option value="Уточнення">Уточнення</option>
+                        <option value="Підбір вакансії">Підбір вакансії</option>
+                        <option value="Ми відмовили">Ми відмовили</option>
+                      </select>
+                
             </div>
         </div>
  
