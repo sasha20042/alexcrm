@@ -24,6 +24,10 @@
                 <input type="text" name="product_code" class="form-control" placeholder="Вакансія" value="{{ $product->product_code }}" >
             </div>
             <div class="col mb-3">
+                <label class="form-label">Менеджер</label>
+                <input type="text" name="manager" class="form-control" placeholder="Менеджер" value="{{ $product->manager }}" >
+            </div>
+            <div class="col mb-3">
                 <label class="form-label">Стан</label>
                 <textarea class="form-control" name="description" placeholder="Стан" >{{ $product->description }}</textarea>
             </div>

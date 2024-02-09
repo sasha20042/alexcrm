@@ -20,6 +20,7 @@
                 <th>ПІБ</th>
                 <th>Телефон</th>
                 <th>Вакансія</th>
+                <th>Менеджер</th>
                 <th>Стан</th>
                 <th>Дія</th>
             </tr>
@@ -32,7 +33,9 @@
                         <td class="align-middle">{{ $rs->title }}</td>
                         <td class="align-middle">{{ $rs->price }}</td>
                         <td class="align-middle">{{ $rs->product_code }}</td>
-                        <td class="align-middle">{{ $rs->description }}</td>  
+                         <td class="align-middle">{{ $rs->manager }}</td>
+                         <td class="align-middle">{{ $rs->description }}</td>  
+                       
                         <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('products.show', $rs->id) }}" type="button" class="btn btn-secondary">Деталі</a>

@@ -20,6 +20,9 @@
                 <input type="text" name="product_code" class="form-control" placeholder="Вакансія">
             </div>
             <div class="col">
+                <input type="text" name="manager" class="form-control" placeholder="Менеджер">
+            </div>
+            <div class="col">
                 <textarea class="form-control" name="description" placeholder="Стан"></textarea>
             </div>
         </div>
