@@ -27,6 +27,13 @@
           <span>Клієнти</span>
       </a>
   </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('project') }}">
+        <i class="fas fa-fw fa-users"></i>
+        <span>Проекти</span>
+    </a>
+</li>
   
   <li class="nav-item">
       <a class="nav-link" href="/profile">
