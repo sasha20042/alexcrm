@@ -30,7 +30,7 @@
 
   <li class="nav-item">
     <a class="nav-link" href="{{ route('project') }}">
-        <i class="fas fa-fw fa-users"></i>
+        <i class="fas fa-fw fa-folder"></i>
         <span>Проекти</span>
     </a>
 </li>
