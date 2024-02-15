@@ -24,7 +24,7 @@
         <h2>{{ $country }}</h2>
         <div class="company-cards">
             @foreach($project->where('country', $country) as $rs)
-                <div class="card company-card" data-country="{{ $country }}" data-company="{{ $rs->company }}">
+                <div class="card company-card" style="" data-country="{{ $country }}" data-company="{{ $rs->company }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ $rs->company }}</h5>
                         <p class="card-text">{{ $rs->city }}</p>
@@ -43,7 +43,7 @@
                                             </div>
                                             <hr>
                                             <div style="display: flex;" >
-                                                <div id="pdfPreview" style="margin-right: 20px; border: 1px solid #ccc; "></div>
+                                                <div id="pdfPreview" style="margin-right: 20px; border: 1px solid #ccc;  "></div>
                                                 <div>
                                                     <label for="name">Країна</label>
                                                     <input type="text" id="name" required>
