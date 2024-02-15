@@ -3,6 +3,61 @@
 @section('title', '')
   
 @section('contents')
+<style>
+    .country-block {
+             border: 1px solid #ccc;
+             margin-bottom: 20px;
+             padding: 10px;
+             background-color: #f8f9fa;
+         }
+ 
+         /* Оформлення для кнопок країн */
+         .country-btn {
+             background-color: #007bff;
+             color: #fff;
+             border: none;
+             padding: 10px;
+             cursor: pointer;
+             margin-right: 10px;
+         }
+ 
+         /* Оформлення для блоку компаній */
+         .company-cards {
+             display: flex;
+             flex-wrap: wrap;
+             gap: 10px;
+             margin-top: 10px;
+         }
+ 
+         /* Оформлення для блоку компанії */
+         .company-card {
+             border: 1px solid #ccc;
+             padding: 10px;
+             background-color: #fff;
+             line-height: 1.2; /* Зменшення інтервалу між текстовими елементами */
+             overflow: hidden; /* Заборона виділення за межі блоку */
+             margin-right: 10px;
+         }
+ 
+         /* Оформлення для блоку вакансій */
+         .vacancy-cards {
+             display: flex;
+             flex-wrap: wrap;
+             gap: 10px;
+             margin-top: 10px;
+         }
+ 
+         /* Оформлення для блоку вакансії */
+         .vacancy-card {
+     display: none;  /* Додайте цей стиль для приховання вакансій за замовчуванням */
+     border: 1px solid #ccc;
+     padding: 10px;
+     background-color: #f8f9fa;
+     line-height: 1.2; /* Зменшення інтервалу між текстовими елементами */
+     overflow: hidden; /* Заборона виділення за межі блоку */
+     margin-right: 10px;
+ }
+ </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
     <div class="d-flex align-items-center justify-content-between">
@@ -34,12 +89,12 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $vacancy->vacancy }}</h5>
                                         <p class="card-text">{{ $vacancy->job }}</p> 
-                                        <button type="button" class="btn btn-primary details-btn" onclick="openPDFEditor()">Створити PDF</button>
+                                        <button type="button" class="btn btn-primary details-btn" onclick="openPDFEditor('{{ $vacancy->id }}')">Створити PDF</button>
 
-                                        <div id="pdfEditorModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 9999; " >
+                                        <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 9999; ">
                                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                                 <h3>Редактор PDF</h3>
-                                                <button type="button" onclick="closePDFEditor()">✖</button>
+                                                <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')">✖</button>
                                             </div>
                                             <hr>
                                             <div style="display: flex;" >
@@ -100,15 +155,14 @@
     $(this).closest('.company-card').find('.vacancy-card').show();
     }); 
     });
-    function openPDFEditor() {
-            // Відображення модального вікна
-            document.getElementById('pdfEditorModal').style.display = 'block';
-        }
+    function openPDFEditor(vacancyId) {
+    document.getElementById('pdfEditorModal_' + vacancyId).style.display = 'block';
+}
 
-        function closePDFEditor() {
-            // Закриття модального вікна
-            document.getElementById('pdfEditorModal').style.display = 'none';
-        }
+function closePDFEditor(vacancyId) {
+    document.getElementById('pdfEditorModal_' + vacancyId).style.display = 'none';
+}
+
 
         function generateAndPreviewPDF() {
             var name = document.getElementById('name').value;
