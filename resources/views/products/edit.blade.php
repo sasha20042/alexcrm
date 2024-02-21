@@ -3,39 +3,106 @@
 @section('title', '')
   
 @section('contents')
-    <h1 class="mb-0">Змінити</h1>
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        background-color: #ffffff;
+        margin-top: 30px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #ffc107;
+        text-align: center;
+    }
+
+    hr {
+        border-color: #ffc107;
+    }
+
+    .form-label {
+        color: #343a40;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+        color: #212529;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-warning:hover {
+        background-color: #ffae00;
+    }
+</style>
+<div class="container">
+    <h1 class="mb-4">Змінити</h1>
     <hr />
+
     <form action="{{ route('products.update', $product->id) }}" method="POST">
         @csrf
         @method('PUT')
+
         <div class="row">
-            <div class="col mb-3">
+            <div class="col-md-6 mb-3">
                 <label class="form-label">ПІБ</label>
                 <input type="text" name="title" class="form-control" placeholder="ПІБ" value="{{ $product->title }}" >
             </div>
-            <div class="col mb-3">
+            <div class="col-md-6 mb-3">
                 <label class="form-label">Номер</label>
                 <input type="text" name="price" class="form-control" placeholder="Номер" value="{{ $product->price }}" >
             </div>
         </div>
+
         <div class="row">
-            <div class="col mb-3">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Стать</label>
+                <input type="text" name="sex" class="form-control" placeholder="Стать" value="{{ $product->sex }}" >
+            </div> 
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Дата народження</label>
+                <input type="date" name="age" class="form-control" placeholder="Дата народження" value="{{ $product->age }}" >
+            </div>
+            <div class="col-md-4 mb-3">
                 <label class="form-label">Вакансія</label>
                 <input type="text" name="product_code" class="form-control" placeholder="Вакансія" value="{{ $product->product_code }}" >
             </div>
-            <div class="col mb-3">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
                 <label class="form-label">Менеджер</label>
                 <input type="text" name="manager" class="form-control" placeholder="Менеджер" value="{{ $product->manager }}" >
             </div>
-            <div class="col mb-3">
+            <div class="col-md-6 mb-3">
                 <label class="form-label">Стан</label>
-                <textarea class="form-control" name="description" placeholder="Стан" >{{ $product->description }}</textarea>
+                <textarea class="form-control" name="description" placeholder="Стан">{{ $product->description }}</textarea>
             </div>
         </div>
-        <div class="row">
-            <div class="d-grid">
+
+        <div class="row mt-3">
+            <div class="col-md-6">
                 <button class="btn btn-warning">Оновити</button>
             </div>
+            <!-- Додайте інші кнопки або дії за необхідності -->
         </div>
     </form>
+</div>
 @endsection

@@ -4,6 +4,34 @@
   
 @section('contents')
 <style>
+     .country-card {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 10px 40px 10px 20px;
+        background-color: #3498db;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    .country-card img {
+        width: 20px;
+        height: auto;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .country-card span {
+        position: relative;
+        padding-left: 30px; /* Збільште це значення відповідно до вашого вигляду */
+    }
+
+    .country-card:hover {
+        background-color: #2980b9;
+    }
     .country-block {
              border: 1px solid #ccc;
              margin-bottom: 20px;
@@ -58,6 +86,8 @@
      margin-right: 10px;
  }
  </style>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
     <div class="d-flex align-items-center justify-content-between">
@@ -70,9 +100,23 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <div class="country-card" data-country="Угорщина">Угорщина</div>
-    <div class="country-card" data-country="Словаччина">Словаччина</div>
-    <div class="country-card" data-country="Чехія">Чехія</div>
+    <div class="country-card" data-country="Угорщина">
+        <img src="{{ asset('admin_assets/img/hungary.png') }}" alt="Угорщина Прапор">
+        <span>Угорщина</span>
+    </div>
+    
+    <div class="country-card" data-country="Словаччина">
+        <img src="{{ asset('admin_assets/img/slovakia.png') }}" alt="Словаччина Прапор">
+        <span>Словаччина</span>
+    </div>
+    
+    <div class="country-card" data-country="Чехія">
+        <img src="{{ asset('admin_assets/img/czech-republic.png') }}" alt="Чехія Прапор">
+        <span>Чехія</span>
+    </div>
+    
+    <br>
+    <br>
     
     @foreach(['Угорщина', 'Словаччина', 'Чехія'] as $country)
     <div class="country-block" id="{{ $country }}">
@@ -164,19 +208,94 @@ function closePDFEditor(vacancyId) {
 }
 
 
-        function generateAndPreviewPDF() {
+function generateAndPreviewPDF() {
             var name = document.getElementById('name').value;
             var email = document.getElementById('email').value;
 
             // Створення документу pdfmake
             var docDefinition = {
-                content: [
-                    { text: 'ALEXXQUALITYWORK', fontSize: 18, color: 'blue' },
-                    { text: `Країна: ${name}`, fontSize: 12 },
-                    { text: `Назва проекту: ${email}`, fontSize: 12 },
-                    { text: 'ALEXXQUALITYWORK', fontSize: 14, color: 'black' }
-                ]
-            };
+    pageOrientation: 'portrait',
+    pageSize: 'A4',
+    pageMargins: [0, 0, 0, 0],
+    content: [
+        {
+            canvas: [
+                { type: 'rect', x: 0, y: 0, w: 595.28, h: 841.89, color: '#F9F3E4' }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 20 },
+            columns: [
+                {
+                    width: 'auto',
+                    text: 'flag1',
+                    alignment: 'left'
+                },
+                {
+                    width: '*',
+                    text: 'ALEXXQUALITYWORK',
+                    fontSize: 18,
+                    color: 'blue',
+                    alignment: 'center'
+                },
+                {
+                    width: 'auto',
+                    text: 'flag2',
+                    alignment: 'right'
+                }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 40 },
+            canvas: [
+                { type: 'line', x1: 0, y1: 0, x2: 575.28, y2: 0, lineWidth: 2, lineColor: 'gold' }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 60 },
+            text: 'НАЗВА КРАЇНИ - НАЗВА КОМПАНІЇ',
+            fontSize: 14,
+            alignment: 'center',
+            bold: true
+        },
+        {
+            absolutePosition: { x: 10, y: 80 },
+            canvas: [
+                { type: 'line', x1: 0, y1: 0, x2: 575.28, y2: 0, lineWidth: 2, lineColor: 'gold' }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 100 },
+            ul: [
+                `${name} (Місце роботи)`,
+                `${email} (Назва професії)`,
+                'Обмеження щодо статі та віку',
+                {
+                    text: 'Короткі відомості',
+                    ul: [
+                        'Наявність змін на виробництві',
+                        'Кількість робочих годин',
+                        'Заробітна плата'
+                    ]
+                },
+                {
+                    text: 'Умови проживання',
+                    ul: [
+                        'Умова 1',
+                        'Умова 2',
+                        'Умова 3'
+                    ]
+                }
+            ],
+            fontSize: 12
+        },
+        {
+            absolutePosition: { x: 10, y: 200 },
+            text: 'ALEXXQUALITYWORK'
+        }
+    ]
+};
+
 
             // Створення PDF документу і отримання Blob
             pdfMake.createPdf(docDefinition).getBlob((blob) => {

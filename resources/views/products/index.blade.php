@@ -18,6 +18,8 @@
             <tr>
                 <th>№</th>
                 <th>ПІБ</th>
+                <th>Стать</th>
+                <th>Вік</th>
                 <th>Телефон</th>
                 <th>Вакансія</th>
                 <th>Менеджер</th>
@@ -31,11 +33,13 @@
                     <tr>
                         <td class="align-middle">{{ $loop->iteration }}</td>
                         <td class="align-middle">{{ $rs->title }}</td>
+                        <td class="align-middle">{{ $rs->sex }}</td>
+                        <td class="align-middle" id="ageDisplay">{{ $rs->age }}</td>
                         <td class="align-middle">{{ $rs->price }}</td>
                         <td class="align-middle">{{ $rs->product_code }}</td>
                          <td class="align-middle">{{ $rs->manager }}</td>
                          <td class="align-middle">{{ $rs->description }}</td>  
-                       
+                         
                         <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <a href="{{ route('products.show', $rs->id) }}" type="button" class="btn btn-secondary">Деталі</a>
@@ -56,4 +60,28 @@
             @endif
         </tbody>
     </table>
+    <script>
+        // Отримуємо елемент, в якому відображається вік
+        var ageDisplay = document.getElementById('ageDisplay');
+
+// Перевіряємо, чи елемент існує перед отриманням властивості textContent
+if (ageDisplay) {
+    // Отримуємо дату народження з текстового контенту елемента
+    var birthdate = new Date(ageDisplay.textContent);
+
+    // Отримуємо поточну дату
+    var currentDate = new Date();
+
+    // Обчислюємо вік
+    var age = currentDate.getFullYear() - birthdate.getFullYear();
+
+    // Перевіряємо, чи вже відбувся день народження у поточному році
+    if (currentDate.getMonth() < birthdate.getMonth() || (currentDate.getMonth() === birthdate.getMonth() && currentDate.getDate() < birthdate.getDate())) {
+        age--;
+    }
+
+    // Відображаємо вік у елементі
+    ageDisplay.textContent = age ;
+}
+    </script>
 @endsection
