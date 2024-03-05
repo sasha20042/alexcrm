@@ -3,6 +3,7 @@
 @section('title', '')
   
 @section('contents')
+
     <div class="d-flex align-items-center justify-content-between">
         <h1 class="mb-0">Список</h1>
         <a href="{{ route('products.create') }}" class="btn btn-primary">Додати клієнта</a>
@@ -13,14 +14,16 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover" style="color: black;" >
         <thead class="table-primary">
             <tr>
                 <th>№</th>
                 <th>ПІБ</th>
+                <th>Громадянство</th>
                 <th>Стать</th>
                 <th>Вік</th>
                 <th>Телефон</th>
+                <th>Місцезнаходження</th>
                 <th>Вакансія</th>
                 <th>Менеджер</th>
                 <th>Стан</th>
@@ -33,9 +36,11 @@
                     <tr>
                         <td class="align-middle">{{ $loop->iteration }}</td>
                         <td class="align-middle">{{ $rs->title }}</td>
+                        <td class="align-middle">{{ $rs->citizenship }}</td>
                         <td class="align-middle">{{ $rs->sex }}</td>
                         <td class="align-middle" id="ageDisplay">{{ $rs->age }}</td>
                         <td class="align-middle">{{ $rs->price }}</td>
+                        <td class="align-middle">{{ $rs->location }}</td>
                         <td class="align-middle">{{ $rs->product_code }}</td>
                          <td class="align-middle">{{ $rs->manager }}</td>
                          <td class="align-middle">{{ $rs->description }}</td>  

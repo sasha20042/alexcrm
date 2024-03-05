@@ -109,9 +109,18 @@
         <label class="form-label">Вакансія</label>
         <input type="text" name="product_code" class="form-control" value="{{ $product->product_code }}" readonly>
     </div>
+    <div class="col-md-6">
+        <label for="citizenship" class="form-label">Громадянство</label>
+        <input type="text" name="citizenship" class="form-control" id="citizenship" value="{{ $product->citizenship }}" readonly>
+    
+    </div>
 </div>
 
 <div class="row mb-3">
+    <div class="col-md-6 mb-3">
+        <label for="location" class="form-label">Місцезнаходження</label>
+        <input type="text" name="location" class="form-control" id="location" value="{{ $product->location }}" readonly>
+    </div>
     <div class="col-md-6">
         <label class="form-label">Менеджер</label>
         <input type="text" name="manager" class="form-control" value="{{ $product->manager }}" readonly>

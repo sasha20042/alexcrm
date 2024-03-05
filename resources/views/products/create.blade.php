@@ -62,6 +62,7 @@
             <div class="col-md-6">
                 <label for="title" class="form-label">ПІБ</label>
                 <input type="text" name="title" class="form-control" id="title" placeholder="Введіть ПІБ" required>
+            
             </div>
             <div class="col-md-6">
                 <label for="price" class="form-label">Номер телефону</label>
@@ -76,7 +77,7 @@
             </div>
             <div class="col-md-6">
                 <label for="manager" class="form-label">Менеджер</label>
-                <input type="text" name="manager" class="form-control" id="manager" placeholder="Введіть ім'я менеджера" required>
+                <input type="text" name="manager" class="form-control" id="manager" value="{{ auth()->user()->name }}" readonly>
             </div>
         </div>
 
@@ -86,13 +87,19 @@
                 <input type="text" name="sex" class="form-control" id="sex" placeholder="Введіть стать">
             </div>
             <div class="col-md-6">
+                <label for="citizenship" class="form-label">Громадянство</label>
+                <input type="text" name="citizenship" class="form-control" id="citizenship" placeholder="Громадянство" required>
+            
+            </div>
+            <div class="col-md-6">
                 <label for="age" class="form-label">Дата народження</label>
                 <input type="date" name="age" class="form-control" id="age" required>
             </div>
         </div>
 
+
         <div class="row mb-3">
-            <div class="col">
+            <div class="col-md-6">
                 <label for="description" class="form-label">Статус</label>
                 <select name="description" class="form-select" id="description" required>
                     <option value="На опрацюванні">На опрацюванні</option>
@@ -103,6 +110,10 @@
                     <option value="Підбір вакансії">Підбір вакансії</option>
                     <option value="Ми відмовили">Ми відмовили</option>
                 </select>
+            </div>
+            <div class="col-md-6">
+                <label for="location" class="form-label">Місцезнаходження</label>
+                <input type="text" name="location" class="form-control" id="location" required>
             </div>
         </div>
 

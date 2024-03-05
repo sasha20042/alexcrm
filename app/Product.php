@@ -14,6 +14,8 @@ class Product extends Model
         'description',
         'manager',
         'age',
-        'sex'
+        'sex',
+        'location',
+        'citizenship'
     ];
 }
