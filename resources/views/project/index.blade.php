@@ -118,87 +118,109 @@
     <br>
     <br>
     
-    @foreach(['Угорщина', 'Словаччина', 'Чехія'] as $country)
-    <div class="country-block" id="{{ $country }}">
-        <h2>{{ $country }}</h2>
-        <div class="company-cards">
-            @foreach($project->where('country', $country) as $rs)
-                <div class="card company-card" style="" data-country="{{ $country }}" data-company="{{ $rs->company }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $rs->company }}</h5>
-                        <p class="card-text">{{ $rs->city }}</p>
-                        <div class="vacancy-cards">
-                            @foreach($project->where('company', $rs->company) as $vacancy)
-                                <div class="card vacancy-card" style="margin: 10px;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $vacancy->vacancy }}</h5>
-                                        <p class="card-text">{{ $vacancy->job }}</p> 
-                                        <button type="button" class="btn btn-primary details-btn" onclick="openPDFEditor('{{ $vacancy->id }}')">Створити PDF</button>
-
-                                        <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 9999; ">
-                                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                                <h3>Редактор PDF</h3>
-                                                <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')">✖</button>
-                                            </div>
-                                            <hr>
-                                            <div style="display: flex;" >
-                                                <div id="pdfPreview" style="margin-right: 20px; border: 1px solid #ccc;  "></div>
-                                                <div>
-                                                    <label for="name">Країна</label>
-                                                    <input type="text" id="name" required>
-                                                    <br>
-                                                    <label for="email">Назва проекту\заводу</label>
-                                                    <input type="email" id="email" required>
-                                                    <br>
-                                                    <button type="button" onclick="generateAndPreviewPDF()">Створити і Переглянути PDF</button>
-                                                    <br> <br>
-                                                    <button type="button" onclick="downloadPDF()">Завантажити PDF</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                </div> 
-                            @endforeach
-                        </div> 
-                        <button class="btn btn-secondary details-btn">Детальніше</button> <br>
+    @php
+        $uniqueCountries = $project->pluck('country')->unique();
+    @endphp
+    
+    @foreach($uniqueCountries as $country)
+        <div class="country-block" id="{{ $country }}">
+            <h2>{{ $country }}</h2>
+            <div class="company-cards">
+                @php
+                    $uniqueCompanies = $project->where('country', $country)->pluck('company')->unique();
+                @endphp
+    
+                @foreach($uniqueCompanies as $companyIndex => $company)
+                    <div class="card company-card" data-country="{{ $country }}" data-company="{{ $company }}">
+                        <!-- Ваш код для компаній -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $company }}</h5>
+                            <p class="card-text">{{ $project->where('country', $country)->where('company', $company)->first()->city }}</p>
+                            <button class="btn btn-secondary details-btn" data-index="{{ $companyIndex }}">Детальніше</button>
+                        </div>
                     </div>
-                </div> <br>
-            @endforeach
+                @endforeach
+            </div>
+                <hr>
+            <div class="vacancy-cards" id="{{ $country }}" style="display: none;">
+                @foreach($uniqueCompanies as $companyIndex => $company)
+                    @php
+                        $vacancies = $project->where('country', $country)->where('company', $company);
+                    @endphp
+    
+                    @foreach($vacancies as $vacancyIndex => $vacancy)
+                        <div class="card vacancy-card" style="margin: 10px; display: none;" data-index="{{ $companyIndex }}">
+                            <!-- Ваш код для вакансій -->
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $vacancy->vacancy }}</h5>
+                                <p class="card-text">{{ $vacancy->job }}</p> 
+                                <button type="button" class="btn btn-primary" onclick="openPDFEditor('{{ $vacancy->id }}')">Створити PDF</button>
+
+                                <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 9999; ">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <h3>Редактор PDF</h3>
+                                        <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')">✖</button>
+                                    </div>
+                                    <hr>
+                                       <div style="display: flex;">
+                                           <!-- Додаємо блок для відображення PDF -->
+                                           <div id="pdfContainer_{{ $vacancy->id }}"></div>
+                                           <div>
+                                            <label for="nameInput">Введіть ваше ім'я:</label>
+                                            <input type="text" id="nameInput_{{ $vacancy->id }}" placeholder="Ім'я">
+                                                  <br>
+                                            <label for="email">Назва проекту\заводу</label>
+                                            <input type="email" id="email" required>
+                                            <br>
+                                            <button type="button" onclick="generatePDF('{{ $vacancy->id }}')">Згенерувати PDF</button>
+                                            <br> <br>
+                                            <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')">Завантажити PDF</button>
+                                        </div>
+                                        </div>
+                                       
+                                    
+                                </div>
+                            </div> 
+                        </div>
+                    @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
-@endforeach
+    @endforeach
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function(){
-        // Ховаємо всі блоки крім блоків країн
-        $('.country-block, .company-cards, .vacancy-card, .details-btn').hide();
-
-        $('.country-card').on('click', function(){
-            var countryId = $(this).data('country');
-
-            // Ховаємо всі блоки крім блоків компаній в обраній країні
-            $('.country-block').hide();
-            $('#'+countryId).show();
-
-            // Ховаємо всі блоки крім блоків компаній
-            $('.company-cards').hide();
-
-            // Показуємо блок компаній в обраній країні
-            $('#'+countryId+' .company-cards').show();
-
-            // Ховаємо всі блоки вакансій та кнопок "Детальніше"
-            $('.details-btn').show();
+      $(document).ready(function(){
+            // Ховаємо всі блоки крім блоків країн
+            $('.country-block, .company-cards, .vacancy-card, .details-btn').hide();
+    
+            $(document).on('click', '.country-card', function(){
+                var countryId = $(this).data('country');
+    
+                // Ховаємо всі блоки крім блоків компаній в обраній країні
+                $('.country-block').hide();
+                $('#'+countryId).show();
+    
+                // Ховаємо всі блоки крім блоків компаній
+                $('.company-cards').hide();
+    
+                // Показуємо блок компаній в обраній країні
+                $('#'+countryId+' .company-cards').show();
+    
+                // Ховаємо всі блоки вакансій та кнопок "Детальніше"
+                $('.details-btn').show();
+            });
+    
+            $(document).on('click', '.details-btn', function(){
+                var index = $(this).data('index');
+    
+                // Ховаємо всі блоки вакансій
+                $('.vacancy-card').hide();
+    
+                // Показуємо вакансії для обраної компанії
+                $('.vacancy-card[data-index="'+index+'"]').show();
+            }); 
         });
-
-        $(document).on('click', '.details-btn', function(){
-    // Ховаємо всі блоки вакансій
-    $('.vacancy-card').hide();
-
-    // Показуємо вакансії для обраної компанії
-    $(this).closest('.company-card').find('.vacancy-card').show();
-    }); 
-    });
     function openPDFEditor(vacancyId) {
     document.getElementById('pdfEditorModal_' + vacancyId).style.display = 'block';
 }
@@ -208,12 +230,13 @@ function closePDFEditor(vacancyId) {
 }
 
 
-function generateAndPreviewPDF() {
-            var name = document.getElementById('name').value;
-            var email = document.getElementById('email').value;
-
-            // Створення документу pdfmake
-            var docDefinition = {
+function generatePDF(vacancyId) {
+    // Код для генерації PDF за допомогою PDFmake
+    // Приклад: https://pdfmake.github.io/docs/
+    // Потрібно додати логіку для генерації та відображення PDF у блоку з id `pdfContainer_${vacancyId}`
+    var userName = document.getElementById(`nameInput_${vacancyId}`).value;
+    
+    var docDefinition = {
     pageOrientation: 'portrait',
     pageSize: 'A4',
     pageMargins: [0, 0, 0, 0],
@@ -267,7 +290,7 @@ function generateAndPreviewPDF() {
         {
             absolutePosition: { x: 10, y: 100 },
             ul: [
-                `${name} (Місце роботи)`,
+                `${userName} (Місце роботи)`,
                 `${email} (Назва професії)`,
                 'Обмеження щодо статі та віку',
                 {
@@ -296,33 +319,109 @@ function generateAndPreviewPDF() {
     ]
 };
 
+    
 
-            // Створення PDF документу і отримання Blob
-            pdfMake.createPdf(docDefinition).getBlob((blob) => {
-                // Відображення PDF у вбудованому фреймі
-                var url = URL.createObjectURL(blob);
-                var pdfViewer = document.getElementById('pdfPreview');
-                pdfViewer.innerHTML = `<iframe width="500" height="500" src="${url}" frameborder="0"></iframe>`;
-            });
+    // Або якщо ви хочете вставити PDF у вказаний контейнер:
+    pdfMake.createPdf(docDefinition).getBlob((blob) => {
+        var pdfContainer = document.getElementById(`pdfContainer_${vacancyId}`);
+        pdfContainer.innerHTML = '<iframe width="500" height="500" name="plugin" src="' + URL.createObjectURL(blob) + '" type="application/pdf">';
+    });
+
+}
+function downloadPDF(vacancyId) {
+    var userName = document.getElementById(`nameInput_${vacancyId}`).value;
+    
+    var docDefinition = {
+    pageOrientation: 'portrait',
+    pageSize: 'A4',
+    pageMargins: [0, 0, 0, 0],
+    content: [
+        {
+            canvas: [
+                { type: 'rect', x: 0, y: 0, w: 595.28, h: 841.89, color: '#F9F3E4' }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 20 },
+            columns: [
+                {
+                    width: 'auto',
+                    text: 'flag1',
+                    alignment: 'left'
+                },
+                {
+                    width: '*',
+                    text: 'ALEXXQUALITYWORK',
+                    fontSize: 18,
+                    color: 'blue',
+                    alignment: 'center'
+                },
+                {
+                    width: 'auto',
+                    text: 'flag2',
+                    alignment: 'right'
+                }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 40 },
+            canvas: [
+                { type: 'line', x1: 0, y1: 0, x2: 575.28, y2: 0, lineWidth: 2, lineColor: 'gold' }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 60 },
+            text: 'НАЗВА КРАЇНИ - НАЗВА КОМПАНІЇ',
+            fontSize: 14,
+            alignment: 'center',
+            bold: true
+        },
+        {
+            absolutePosition: { x: 10, y: 80 },
+            canvas: [
+                { type: 'line', x1: 0, y1: 0, x2: 575.28, y2: 0, lineWidth: 2, lineColor: 'gold' }
+            ]
+        },
+        {
+            absolutePosition: { x: 10, y: 100 },
+            ul: [
+                `${userName} (Місце роботи)`,
+                `${email} (Назва професії)`,
+                'Обмеження щодо статі та віку',
+                {
+                    text: 'Короткі відомості',
+                    ul: [
+                        'Наявність змін на виробництві',
+                        'Кількість робочих годин',
+                        'Заробітна плата'
+                    ]
+                },
+                {
+                    text: 'Умови проживання',
+                    ul: [
+                        'Умова 1',
+                        'Умова 2',
+                        'Умова 3'
+                    ]
+                }
+            ],
+            fontSize: 12
+        },
+        {
+            absolutePosition: { x: 10, y: 200 },
+            text: 'ALEXXQUALITYWORK'
         }
+    ]
+};
 
-        function downloadPDF() {
-            var name = document.getElementById('name').value;
-            var email = document.getElementById('email').value;
+    pdfMake.createPdf(docDefinition).download(`Ваше_ім'я_файлу_${vacancyId}.pdf`);
+}
 
-            // Створення документу pdfmake
-            var docDefinition = {
-                content: [
-                    { text: 'Мій PDF Заголовок', fontSize: 18, color: 'blue' },
-                    { text: `Ім'я: ${name}`, fontSize: 12 },
-                    { text: `Електронна пошта: ${email}`, fontSize: 12 },
-                    { text: 'Мій PDF Підпис', fontSize: 14, color: 'black' }
-                ]
-            };
-
-            // Створення PDF документу і вивантаження
-            pdfMake.createPdf(docDefinition).download('my_pdf');
-        }
+// Додайте цю функцію в HTML для кнопки "Завантажити PDF"
+function downloadPDFButton(vacancyId) {
+    downloadPDF(vacancyId);
+}
+    
 </script>
 
 
