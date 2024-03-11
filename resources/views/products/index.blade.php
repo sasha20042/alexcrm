@@ -26,8 +26,8 @@
                 <th>Місцезнаходження</th>
                 <th>Громадянство</th>
                 <th>Вакансія</th>
-                <th>Статус</th>
                 <th>Менеджер</th>
+                <th>Статус</th>
                 <th>Дія</th>
             </tr>
         </thead>
@@ -37,7 +37,12 @@
                     <tr>
                         <td class="align-middle">{{ $loop->iteration }}</td>
                         <td class="align-middle">{{ $rs->created_at->format('d.m') }}</td>
-                        <td class="align-middle">{{ $rs->title }}</td>
+                        <td class="align-middle">
+                            @if($rs->blacklist == 'yes')
+                            <span style="color: white; font-weight: bold; font-size: 20px; background-color: #FF4D4D; border-radius: 50%;  padding: 5px;">!</span>
+                            @endif
+                            {{ $rs->title }}
+                        </td>
                         <td class="align-middle">{{ $rs->price }}</td>
                         <td class="align-middle">{{ $rs->age }}</td>
                         <td class="align-middle">{{ $rs->sex }}</td>

@@ -16,6 +16,7 @@ class Product extends Model
         'age',
         'sex',
         'location',
-        'citizenship'
+        'citizenship',
+        'blacklist'
     ];
 }

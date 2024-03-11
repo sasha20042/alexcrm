@@ -62,7 +62,6 @@
             <div class="col-md-6">
                 <label for="title" class="form-label">ПІБ</label>
                 <input type="text" name="title" class="form-control" id="title" placeholder="Введіть ПІБ" required>
-            
             </div>
             <div class="col-md-6">
                 <label for="price" class="form-label">Номер телефону</label>
@@ -84,19 +83,20 @@
         <div class="row mb-3">
             <div class="col-md-6">
                 <label for="sex" class="form-label">Стать</label>
-                <input type="text" name="sex" class="form-control" id="sex" placeholder="Введіть стать">
+                <select name="sex" class="form-select" id="sex" required>
+                    <option value="Чоловік">Чоловік</option>
+                    <option value="Жінка">Жінка</option>
+                </select>
             </div>
             <div class="col-md-6">
                 <label for="citizenship" class="form-label">Громадянство</label>
                 <input type="text" name="citizenship" class="form-control" id="citizenship" placeholder="Громадянство" required>
-            
             </div>
             <div class="col-md-6">
                 <label for="age" class="form-label">Вік</label>
                 <input type="text" name="age" class="form-control" id="age" required>
             </div>
         </div>
-
 
         <div class="row mb-3">
             <div class="col-md-6">
@@ -114,6 +114,20 @@
             <div class="col-md-6">
                 <label for="location" class="form-label">Місцезнаходження</label>
                 <input type="text" name="location" class="form-control" id="location" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-check-label">Чорний список</label>
+                <div class="form-check">
+                    <input type="radio" name="blacklist" class="form-check-input" id="blacklist_yes" value="yes">
+                    <label for="blacklist_yes" class="form-check-label">Так</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" name="blacklist" class="form-check-input" id="blacklist_no" value="no" checked>
+                    <label for="blacklist_no" class="form-check-label">Ні</label>
+                </div>
             </div>
         </div>
 
