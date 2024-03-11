@@ -92,20 +92,18 @@
             
         </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="location" class="form-label">Місцезнаходження</label>
-                <input type="text" name="location" class="form-control" id="location" value="{{ $product->location }}">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">Чорний список</label>
+            <div class="form-check">
+                <input type="radio" name="blacklist" class="form-check-input" id="blacklist_yes" value="yes" {{ $product->blacklist == 'yes' ? 'checked' : '' }}>
+                <label for="blacklist_yes" class="form-check-label">Так</label>
             </div>
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Менеджер</label>
-                <input type="text" name="manager" class="form-control" placeholder="Менеджер" value="{{ $product->manager }}" readonly>
-            </div>
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Стан</label>
-                <textarea class="form-control" name="description" placeholder="Стан">{{ $product->description }}</textarea>
+            <div class="form-check">
+                <input type="radio" name="blacklist" class="form-check-input" id="blacklist_no" value="no" {{ $product->blacklist == 'no' ? 'checked' : '' }}>
+                <label for="blacklist_no" class="form-check-label">Ні</label>
             </div>
         </div>
+        
 
         <div class="row mt-3">
             <div class="col-md-6">

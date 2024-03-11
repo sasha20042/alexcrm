@@ -119,7 +119,7 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-check-label">Чорний список</label>
+                <label class="form-check-label">Особлива Увага</label>
                 <div class="form-check">
                     <input type="radio" name="blacklist" class="form-check-input" id="blacklist_yes" value="yes">
                     <label for="blacklist_yes" class="form-check-label">Так</label>

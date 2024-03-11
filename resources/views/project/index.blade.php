@@ -156,88 +156,69 @@
                                 <p class="card-text">{{ $vacancy->job }}</p> 
                                 <button type="button" class="btn btn-primary" onclick="openPDFEditor('{{ $vacancy->id }}')">Створити PDF</button>
 
-                                <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 9999; ">
+                                <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 9999; max-width: calc(800px + 5%); overflow-y: hidden; max-height: 80vh;">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <h3>Редактор PDF</h3>
-                                        <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')">✖</button>
+                                        <h3 style="color: #333;">Редактор PDF</h3>
+                                        <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')" style="background-color: #333; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">✖ Закрити</button>
                                     </div>
-                                    <hr>
-                                       <div style="display: flex;">
-                                           <!-- Додаємо блок для відображення PDF -->
-                                           <div id="pdfContainer_{{ $vacancy->id }}"></div>
-                                           <div>
-                                           <br>
-                                        
-                                            <label for="statusInput">Статус:</label>
-                                            <input type="text" id="statusInput_{{ $vacancy->id }}" placeholder="Активний, прихований, видалений">
-                                            <br>
-                                        
-                                            <label for="countryInput">Країна:</label>
-                                            <input type="text" id="countryInput_{{ $vacancy->id }}" placeholder="Угорщина, Чехія, Словаччина">
-                                            <br>
-                                        
-                                            <label for="projectNameInput">Назва проекту/заводу:</label>
-                                            <input type="text" id="projectNameInput_{{ $vacancy->id }}" placeholder="Назва проекту/заводу">
-                                            <br>
-                                        
-                                            <label for="factorySpecializationInput">Спеціалізація заводу:</label>
-                                            <input type="text" id="factorySpecializationInput_{{ $vacancy->id }}" placeholder="Спеціалізація заводу">
-                                            <br>
-                                        
-                                            <label for="workLocationInput">Місце роботи:</label>
-                                            <input type="text" id="workLocationInput_{{ $vacancy->id }}" placeholder="Місце роботи">
-                                            <br>
-                                        
-                                            <label for="jobTitleInput">Назва професії:</label>
-                                            <input type="text" id="jobTitleInput_{{ $vacancy->id }}" placeholder="Назва професії">
-                                            <br>
-                                        
-                                            <label for="genderAgeRestrictionsInput">Обмеження щодо статі та віку:</label>
-                                            <input type="text" id="genderAgeRestrictionsInput_{{ $vacancy->id }}" placeholder="Обмеження щодо статі та віку">
-                                            <br>
-                                        
-                                            <label for="shortDetailsInput">Короткі відомості:</label>
-                                            <textarea id="shortDetailsInput_{{ $vacancy->id }}" placeholder="Короткі відомості"></textarea>
-                                            <br>
-                                        
-                                            <label for="productionChangesInput">Наявність змін на виробництві:</label>
-                                            <input type="text" id="productionChangesInput_{{ $vacancy->id }}" placeholder="Наявність змін на виробництві">
-                                            <br>
-                                        
-                                            <label for="workingHoursInput">Кількість робочих годин:</label>
-                                            <input type="text" id="workingHoursInput_{{ $vacancy->id }}" placeholder="Кількість робочих годин">
-                                            <br>
-                                        
-                                            <label for="salaryInput">Заробітна плата:</label>
-                                            <input type="text" id="salaryInput_{{ $vacancy->id }}" placeholder="Заробітна плата">
-                                            <br>
-                                        
-                                            <label for="accommodationConditionsInput">Умови проживання:</label>
-                                            <input type="text" id="accommodationConditionsInput_{{ $vacancy->id }}" placeholder="Умови проживання">
-                                            <br>
-                                        
-                                            <label for="mealConditionsInput">Умови харчування:</label>
-                                            <input type="text" id="mealConditionsInput_{{ $vacancy->id }}" placeholder="Умови харчування">
-                                            <br>
-                                        
-                                            <label for="transportationInput">Транспортування:</label>
-                                            <input type="text" id="transportationInput_{{ $vacancy->id }}" placeholder="Транспортування">
-                                            <br>
-                                        
-                                            <label for="additionalExpensesInput">Додаткові витрати:</label>
-                                            <input type="text" id="additionalExpensesInput_{{ $vacancy->id }}" placeholder="Додаткові витрати">
-                                            <br>
-                                        
-                                           
-                                            <br>
-                                            <button type="button" onclick="generatePDF('{{ $vacancy->id }}')">Згенерувати PDF</button>
-                                            <br> <br>
-                                            <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')">Завантажити PDF</button>
-                                        </div>
-                                        </div>
-                                       
-                                    
-                                </div>
+                                    <hr style="border-top: 1px solid #ddd; margin-bottom: 15px;">
+                                    <div style="display: flex; flex-wrap: wrap; overflow-y: auto;">
+        <!-- Додаємо блок для відображення PDF -->
+        <div id="pdfContainer_{{ $vacancy->id }}" style="flex: 1; margin-right: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background-color: #fff;"></div>
+        <div style="flex: 1; max-height: 60vh; overflow-y: auto; margin-right: 20px;">
+            <!-- Ваша форма тут -->
+            <label for="statusInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Статус:</label>
+            <input type="text" id="statusInput_{{ $vacancy->id }}" placeholder="Активний, прихований, видалений" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="countryInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Країна:</label>
+            <input type="text" id="countryInput_{{ $vacancy->id }}" placeholder="Угорщина, Чехія, Словаччина" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="projectNameInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Назва проекту/заводу:</label>
+            <input type="text" id="projectNameInput_{{ $vacancy->id }}" placeholder="Назва проекту/заводу" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="factorySpecializationInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Спеціалізація заводу:</label>
+            <input type="text" id="factorySpecializationInput_{{ $vacancy->id }}" placeholder="Спеціалізація заводу" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="workLocationInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Місце роботи:</label>
+            <input type="text" id="workLocationInput_{{ $vacancy->id }}" placeholder="Місце роботи" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="jobTitleInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Назва професії:</label>
+            <input type="text" id="jobTitleInput_{{ $vacancy->id }}" placeholder="Назва професії" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="genderAgeRestrictionsInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Обмеження щодо статі та віку:</label>
+            <input type="text" id="genderAgeRestrictionsInput_{{ $vacancy->id }}" placeholder="Обмеження щодо статі та віку" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="shortDetailsInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Короткі відомості:</label>
+            <textarea id="shortDetailsInput_{{ $vacancy->id }}" placeholder="Короткі відомості" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;"></textarea>
+
+            <label for="productionChangesInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Наявність змін на виробництві:</label>
+            <input type="text" id="productionChangesInput_{{ $vacancy->id }}" placeholder="Наявність змін на виробництві" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="workingHoursInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Кількість робочих годин:</label>
+            <input type="text" id="workingHoursInput_{{ $vacancy->id }}" placeholder="Кількість робочих годин" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="salaryInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Заробітна плата:</label>
+            <input type="text" id="salaryInput_{{ $vacancy->id }}" placeholder="Заробітна плата" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="accommodationConditionsInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Умови проживання:</label>
+            <input type="text" id="accommodationConditionsInput_{{ $vacancy->id }}" placeholder="Умови проживання" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="mealConditionsInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Умови харчування:</label>
+            <input type="text" id="mealConditionsInput_{{ $vacancy->id }}" placeholder="Умови харчування" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="transportationInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Транспортування:</label>
+            <input type="text" id="transportationInput_{{ $vacancy->id }}" placeholder="Транспортування" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <label for="additionalExpensesInput" style="color: #333; font-weight: bold; margin-bottom: 5px;">Додаткові витрати:</label>
+            <input type="text" id="additionalExpensesInput_{{ $vacancy->id }}" placeholder="Додаткові витрати" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+            <br>
+            <button type="button" onclick="generatePDF('{{ $vacancy->id }}')" style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Згенерувати PDF</button>
+            <br><br>
+            <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')" style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">Завантажити PDF</button>
+        </div>
+    </div>
+</div>
                             </div> 
                         </div>
                     @endforeach
@@ -308,7 +289,8 @@ function generatePDF(vacancyId) {
     var mealConditions = document.getElementById(`mealConditionsInput_${vacancyId}`).value;
     var transportation = document.getElementById(`transportationInput_${vacancyId}`).value;
     var additionalExpenses = document.getElementById(`additionalExpensesInput_${vacancyId}`).value;
-    const base64Image = '';
+    const base64Image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=';
+    const basee64Image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=';
     var docDefinition = {
     pageOrientation: 'portrait',
     pageSize: 'A4',
