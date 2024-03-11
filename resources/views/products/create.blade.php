@@ -92,8 +92,8 @@
             
             </div>
             <div class="col-md-6">
-                <label for="age" class="form-label">Дата народження</label>
-                <input type="date" name="age" class="form-control" id="age" required>
+                <label for="age" class="form-label">Вік</label>
+                <input type="text" name="age" class="form-control" id="age" required>
             </div>
         </div>
 

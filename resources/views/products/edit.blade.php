@@ -78,7 +78,7 @@
             </div> 
             <div class="col-md-4 mb-3">
                 <label class="form-label">Дата народження</label>
-                <input type="date" name="age" class="form-control" placeholder="Дата народження" value="{{ $product->age }}" >
+                <input type="text" name="age" class="form-control" placeholder="Дата народження" value="{{ $product->age }}" >
             </div>
             <div class="col-md-4 mb-3">
                 <label class="form-label">Вакансія</label>

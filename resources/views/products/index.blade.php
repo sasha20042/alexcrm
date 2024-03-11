@@ -18,15 +18,16 @@
         <thead class="table-primary">
             <tr>
                 <th>№</th>
+                <th>Дата</th>
                 <th>ПІБ</th>
-                <th>Громадянство</th>
-                <th>Стать</th>
-                <th>Вік</th>
                 <th>Телефон</th>
+                <th>Вік</th>
+                <th>Стать</th>
                 <th>Місцезнаходження</th>
+                <th>Громадянство</th>
                 <th>Вакансія</th>
+                <th>Статус</th>
                 <th>Менеджер</th>
-                <th>Стан</th>
                 <th>Дія</th>
             </tr>
         </thead>
@@ -35,15 +36,16 @@
                 @foreach($product as $rs)
                     <tr>
                         <td class="align-middle">{{ $loop->iteration }}</td>
+                        <td class="align-middle">{{ $rs->created_at->format('d.m') }}</td>
                         <td class="align-middle">{{ $rs->title }}</td>
-                        <td class="align-middle">{{ $rs->citizenship }}</td>
-                        <td class="align-middle">{{ $rs->sex }}</td>
-                        <td class="align-middle" id="ageDisplay">{{ $rs->age }}</td>
                         <td class="align-middle">{{ $rs->price }}</td>
+                        <td class="align-middle">{{ $rs->age }}</td>
+                        <td class="align-middle">{{ $rs->sex }}</td>
                         <td class="align-middle">{{ $rs->location }}</td>
+                        <td class="align-middle">{{ $rs->citizenship }}</td>
                         <td class="align-middle">{{ $rs->product_code }}</td>
-                         <td class="align-middle">{{ $rs->manager }}</td>
-                         <td class="align-middle">{{ $rs->description }}</td>  
+                        <td class="align-middle">{{ $rs->manager }}</td>
+                        <td class="align-middle">{{ $rs->description }}</td>  
                          
                         <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Basic example">
