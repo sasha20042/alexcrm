@@ -5,9 +5,7 @@
  use App\Http\Controllers\ProductController;
  use App\Http\Controllers\ProjectController;
  
- Route::get('/', function () {
-     return view('welcome');
- });
+ Route::get('/', [AuthController::class, 'login'])->name('login');
  
  Route::group(['prefix' => 'auth'], function () {
      Route::get('register', [AuthController::class, 'register'])->name('register');
