@@ -26,7 +26,7 @@ class ProjectController extends Controller
         $transportation = 'Transportation Value';
         $additionalExpenses = 'Additional Expenses'; // Замініть це значенням, яке ви хочете відобразити
 
-        return view('project.index', compact('project', 'factorySpecialization', 'workLocation', 'jobTitle', 'genderAgeRestrictions', 'shortDetails', 'productionChanges', 'workingHours', 'salary', 'accommodationConditions', 'mealConditions', 'transportation'));
+        return view('project.index', compact('project', 'factorySpecialization', 'workLocation', 'jobTitle', 'genderAgeRestrictions', 'shortDetails', 'productionChanges', 'workingHours', 'salary', 'accommodationConditions', 'mealConditions', 'transportation', 'additionalExpenses'));
   
     }
   

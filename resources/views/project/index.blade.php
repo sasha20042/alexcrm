@@ -428,7 +428,7 @@
                 accommodationConditions: document.getElementById('accommodationConditionsInput_' + vacancyId).value,
                 mealConditions: document.getElementById('mealConditionsInput_' + vacancyId).value,
                 transportation: document.getElementById('transportationInput_' + vacancyId).value,
-
+                additionalExpenses: document.getElementById('additionalExpensesInput_' + vacancyId).value
                 // Додайте інші поля форми за аналогією
             };
 
