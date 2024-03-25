@@ -79,9 +79,13 @@ h1, h2, h3 {
     }
 
     .gender-icon {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
+    .name-column{
+        width: 260px;
+        
 
+    }
     .gender-column {
         width: 60px;
     }
@@ -107,64 +111,56 @@ h1, h2, h3 {
             <tr>
                 <th>№</th>
                 <th>Дата</th>
-                <th>ПІБ</th>
-                <th>Телефон</th>
+                <th class="name-column text-center">Прізвище Ім'я</th>
+                <th class="text-center">Телефон</th>
                 <th>Вік</th>
                 <th class="gender-column text-center">Ч/Ж</th>
-                <th>Місцезнаходження</th>
-                <th>Громадянство</th>
-                <th>Вакансія</th>
-                <th>Менеджер</th>
-                <th>Статус</th>
+                <th class="text-center">Місцезнаходження</th>
+                <th class="text-center">Громадянство</th>
+                <th class="text-center">Вакансія</th>
+                <th class="text-center">Менеджер</th>
+                <th class="text-center">Статус</th>
                 <th>Дія</th>
             </tr>
         </thead>
         <tbody>
             @if($product->count() > 0)
                 @foreach($product as $rs)
-                    <tr onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
-                        <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $rs->created_at->format('d.m') }}</td>
-                        <td class="align-middle">
-                            @if($rs->blacklist == 'yes')
+                <tr>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $loop->iteration }}</td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->created_at->format('d.m.y') }}</td>
+                    <td class="align-middle .name-column text-center " onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
+                        @if($rs->blacklist == 'yes')
                             <span style="color: red; font-weight: bold; font-size: 20px;">!</span>
-                            @endif
-                            {{ $rs->title }}
-                        </td>
-                        <td class="align-middle">{{ $rs->price }}</td>
-                        <td class="align-middle">{{ $rs->age }}</td>
-                        <td class="align-middle gender-column text-center">
-                            @if($rs->sex == 'Чоловік')
-                                <i class="fas fa-male gender-icon" style="color: blue;"></i>
-                            @elseif($rs->sex == 'Жінка')
-                                <i class="fas fa-female gender-icon" style="color: rgb(246, 25, 62);"></i>
-                            @endif
-                        </td>
-                        <td class="align-middle">
-                            @if($rs->location == 'Україна')
-                                <span class="flag-icon flag-icon-ua flag-icon-sm" style="color: blue;"></span>
-                            @elseif($rs->location == 'Чехія')
-                                <span class="flag-icon flag-icon-cz flag-icon-sm" style="color: red;"></span>
-                            @elseif($rs->location == 'Словаччина')
-                                <span class="flag-icon flag-icon-sk flag-icon-sm" style="color: #ffbf00;"></span>
-                            @elseif($rs->location == 'Угорщина')
-                                <span class="flag-icon flag-icon-hu flag-icon-sm" style="color: #008000;"></span>
-                            @endif
-                            {{ $rs->location }}
-                        </td>
-    
-                        <td class="align-middle">{{ $rs->citizenship }}</td>
-                        <td class="align-middle">{{ $rs->product_code }}</td>
-                        <td class="align-middle">{{ $rs->manager }}</td>
-                        <td class="align-middle">{{ $rs->description }}</td>
-                        <td class="align-middle action-icons">
-                            <form action="{{ route('products.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Точно видалити?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn  p-0"><i class="fas fa-trash"></i></button>
-                            </form>
-                          </td>
-                    </tr>
+                        @endif
+                        {{ $rs->title }}
+                    </td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->price }}</td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';" style="{{ $rs->age > 55 ? 'color: red;' : '' }}">{{ $rs->age }}</td>
+                    <td class="align-middle gender-column text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
+                        @if($rs->sex == 'Чоловік')
+                            <i class="fas fa-male gender-icon" style="color: blue;"></i>
+                        @elseif($rs->sex == 'Жінка')
+                            <i class="fas fa-female gender-icon" style="color: rgb(246, 25, 62);"></i>
+                        @endif
+                    </td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
+                        
+                        {{ $rs->location }}
+                    </td>
+                
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->citizenship }}</td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->product_code }}</td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->manager }}</td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->description }}</td>
+                    <td class="align-middle action-icon text-center">
+                        <form action="{{ route('products.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Точно видалити?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn p-0"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
                 @endforeach
             @else
                 <tr>

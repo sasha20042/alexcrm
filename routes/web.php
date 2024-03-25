@@ -32,14 +32,14 @@
         Route::delete('destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
      Route::group(['prefix' => 'project'], function () {
-         Route::get('', [ProjectController::class, 'index'])->name('project');
-         Route::get('create', [ProjectController::class, 'create'])->name('project.create');
-         Route::post('store', [ProjectController::class, 'store'])->name('project.store');
-         Route::get('show/{id}', [ProjectController::class, 'show'])->name('project.show');
-         Route::get('edit/{id}', [ProjectController::class, 'edit'])->name('project.edit');
-         Route::put('edit/{id}', [ProjectController::class, 'update'])->name('project.update');
-         Route::delete('destroy/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
-     });
+        Route::get('', [ProjectController::class, 'index'])->name('project');
+        Route::get('create', [ProjectController::class, 'create'])->name('project.create');
+        Route::post('store', [ProjectController::class, 'store'])->name('project.store');
+        Route::get('show/{id}', [ProjectController::class, 'show'])->name('project.show');
+        Route::get('edit/{id}', [ProjectController::class, 'edit'])->name('project.edit');
+        Route::put('update/{id}', [ProjectController::class, 'update'])->name('project.update'); // Оновлено назву маршруту
+        Route::delete('destroy/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
+    });
      
  
      Route::get('/profile', [AuthController::class, 'profile'])->name('profile');

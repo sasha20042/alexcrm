@@ -12,6 +12,25 @@ class Project extends Model
         'company',
         'city',
         'vacancy',
-        'job'
+        'job',
+        'status',
+        'projectName',
+    'factorySpecialization',
+    'workLocation',
+    'jobTitle',
+    'genderAgeRestrictions',
+    'shortDetails',
+    'productionChanges',
+    'workingHours',
+    'salary',
+    'accommodationConditions',
+    'mealConditions',
+    'transportation',
+    'additionalExpenses'
+
+
+
+
+
     ];
 }

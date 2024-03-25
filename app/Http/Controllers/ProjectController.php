@@ -13,8 +13,21 @@ class ProjectController extends Controller
     public function index()
     {
         $project = Project::orderBy('created_at', 'DESC')->get();
+        $factorySpecialization = 'Factory Specialization Value'; // Замініть це значенням, яке ви хочете відобразити
+        $workLocation = 'Work Location Value'; // Замініть це значенням, яке ви хочете відобразити
+        $jobTitle = 'Job Title Value'; // Замініть це значенням, яке ви хочете відобразити
+        $genderAgeRestrictions = 'Gender Age Restrictions Value'; // Замініть це значенням, яке ви хочете відобразити
+        $shortDetails = 'Short Details Value'; // Замініть це значенням, яке ви хочете відобразити
+        $productionChanges = 'Production Changes Value'; // Замініть це значенням, яке ви хочете відобразити
+        $workingHours = 'Working Hours Value'; // Замініть це значенням, яке ви хочете відобразити
+        $salary = 'Salary Value'; // Замініть це значенням, яке ви хочете відобразити
+        $accommodationConditions = 'Accommodation Conditions Value'; // Замініть це значенням, яке ви хочете відобразити
+        $mealConditions = 'Meal Conditions Value'; // Замініть це значенням, яке ви хочете відобразити
+        $transportation = 'Transportation Value';
+        $additionalExpenses = 'Additional Expenses'; // Замініть це значенням, яке ви хочете відобразити
+
+        return view('project.index', compact('project', 'factorySpecialization', 'workLocation', 'jobTitle', 'genderAgeRestrictions', 'shortDetails', 'productionChanges', 'workingHours', 'salary', 'accommodationConditions', 'mealConditions', 'transportation'));
   
-        return view('project.index', compact('project'));
     }
   
     /**
