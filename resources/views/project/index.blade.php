@@ -127,7 +127,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
     <div class="d-flex align-items-center justify-content-between">
@@ -184,7 +184,7 @@
                     </div>
                 @endforeach
             </div>
-            <hr style="border-color: gold;">
+            <hr style="border-color: gold; border-width: 4px ;">
             <div class="vacancy-cards" id="{{ $country }}" style="display: none;">
                 @foreach ($uniqueCompanies as $companyIndex => $company)
                     @php
