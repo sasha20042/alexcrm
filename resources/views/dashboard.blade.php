@@ -75,6 +75,7 @@ body {
     border-radius: 8px;
 }
 </style>
+
 <div class="dashboard-container">
   <div class="card">
       <h2>Всього кандидатів</h2>

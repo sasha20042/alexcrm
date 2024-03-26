@@ -127,7 +127,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
     <div class="d-flex align-items-center justify-content-between">
@@ -199,13 +199,13 @@
                                 <h5 class="card-title">{{ $vacancy->vacancy }}</h5>
                                 <p class="card-text">{{ $vacancy->job }}</p>
                                 <button type="button" class="btn btn-primary"
-                                    onclick="openPDFEditor('{{ $vacancy->id }}')">Створити PDF</button>
+                                    onclick="openPDFEditor('{{ $vacancy->id }}')">Редагувати</button>
                                 <div id="pdfEditorModalOverlay_{{ $vacancy->id }}" class="modal-overlay"
                                     style="display: none;"></div>
                                 <div id="pdfEditorModal_{{ $vacancy->id }}"
                                     style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 9999; max-width: calc(900px + 5%); overflow-y: hidden; max-height: 100vh;">
                                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <h3 style="color: #333;">Редактор PDF</h3>
+                                        <h4 style="color: #333;">Проект</h4>
                                         <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')"
                                             style="background-color: #333; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">✖
                                             Закрити</button>
@@ -337,17 +337,15 @@
 
                                                 <br>
                                                 <button type="button" onclick="generatePDF('{{ $vacancy->id }}')"
-                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Згенерувати
-                                                    PDF</button>
+                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Згенерувати</button>
                                                 <br><br>
                                                 <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')"
-                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">Завантажити
-                                                    PDF</button>
-                                                <br><br>
+                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">Скачати</button>
+                                                <br>
 
                                                 <button type="button" onclick="saveChanges('{{ $vacancy->id }}')"
-                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Зберегти
-                                                    зміни</button>
+                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Зберегти зміни
+                                                    </button>
 
                                         </div>
                                         </form>

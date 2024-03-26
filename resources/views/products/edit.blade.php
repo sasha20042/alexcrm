@@ -52,6 +52,7 @@
         background-color: #ffae00;
     }
 </style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <div class="container">
     <h1 class="mb-4">Змінити</h1>
     <hr />
@@ -84,12 +85,25 @@
                 <label class="form-label">Вакансія</label>
                 <input type="text" name="product_code" class="form-control" placeholder="Вакансія" value="{{ $product->product_code }}" >
             </div>
+        </div>
+
+        <div class="row mb-3">
             <div class="col-md-6">
-                <label for="citizenship" class="form-label">Громадянство</label>
-                <input type="text" name="citizenship" class="form-control" id="citizenship" value="{{ $product->citizenship }}" >
-            
+                <label for="description" class="form-label">Статус</label>
+                <select name="description" class="form-select" id="description" required>
+                    <option value="На опрацюванні" {{ $product->description == 'На опрацюванні' ? 'selected' : '' }}>На опрацюванні</option>
+                    <option value="Відправлено на роботу" {{ $product->description == 'Відправлено на роботу' ? 'selected' : '' }}>Відправлено на роботу</option>
+                    <option value="На резерв" {{ $product->description == 'На резерв' ? 'selected' : '' }}>На резерв</option>
+                    <option value="Відмовився" {{ $product->description == 'Відмовився' ? 'selected' : '' }}>Відмовився</option>
+                    <option value="Уточнення" {{ $product->description == 'Уточнення' ? 'selected' : '' }}>Уточнення</option>
+                    <option value="Підбір вакансії" {{ $product->description == 'Підбір вакансії' ? 'selected' : '' }}>Підбір вакансії</option>
+                    <option value="Ми відмовили" {{ $product->description == 'Ми відмовили' ? 'selected' : '' }}>Ми відмовили</option>
+                </select>
             </div>
-            
+            <div class="col-md-6">
+                <label for="location" class="form-label">Місцезнаходження</label>
+                <input type="text" name="location" class="form-control" id="location" value="{{ $product->location }}" required>
+            </div>
         </div>
 
         <div class="col-md-6 mb-3">
@@ -103,7 +117,6 @@
                 <label for="blacklist_no" class="form-check-label">Ні</label>
             </div>
         </div>
-        
 
         <div class="row mt-3">
             <div class="col-md-6">
@@ -113,4 +126,5 @@
         </div>
     </form>
 </div>
+
 @endsection

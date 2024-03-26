@@ -4,6 +4,8 @@
   
 @section('contents')
 <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&family=Work+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
     body {
@@ -152,7 +154,25 @@ h1, h2, h3 {
                     <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->citizenship }}</td>
                     <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->product_code }}</td>
                     <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->manager }}</td>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->description }}</td>
+                    <td class="align-middle text-center description-column" 
+    onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
+    @if($rs->description == 'На опрацюванні')
+        <span class="badge bg-primary py-2 px-2  text-white">{{ $rs->description }}</span>
+    @elseif($rs->description == 'Відправлено на роботу')
+        <span class="badge bg-success py-2 px-2  text-white">{{ $rs->description }}</span>
+    @elseif($rs->description == 'На резерв')
+        <span class="badge bg-warning py-2 px-2  text-white">{{ $rs->description }}</span>
+    @elseif($rs->description == 'Відмовився')
+        <span class="badge bg-danger py-2 px-2  text-white">{{ $rs->description }}</span>
+    @elseif($rs->description == 'Уточнення')
+        <span class="badge bg-info py-2 px-2 ">{{ $rs->description }}</span>
+    @elseif($rs->description == 'Підбір вакансії')
+        <span class="badge bg-secondary py-2 px-2 ">{{ $rs->description }}</span>
+    @endif
+</td>
+
+
+
                     <td class="align-middle action-icon text-center">
                         <form action="{{ route('products.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Точно видалити?')">
                             @csrf
