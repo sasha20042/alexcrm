@@ -54,7 +54,7 @@
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <div class="container">
-    <h1 class="mb-4">Змінити</h1>
+    <h2 class="mb-4">Взаємодія з кандидатом</h2>
     <hr />
 
     <form action="{{ route('products.update', $product->id) }}" method="POST">

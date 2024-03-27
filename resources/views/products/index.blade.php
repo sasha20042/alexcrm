@@ -4,7 +4,6 @@
   
 @section('contents')
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&family=Work+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
