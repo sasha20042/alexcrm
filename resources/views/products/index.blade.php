@@ -136,7 +136,13 @@ h1, h2, h3 {
                         @endif
                         {{ $rs->title }}
                     </td>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->price }}</td>
+                    <td class="align-middle text-center" >
+                        {{ $rs->price }}
+                        <a href="viber://chat?number={{ $rs->price }}" target="_blank">
+                            <i class="fab fa-viber" style="color: #665cac;"></i>
+                        </a>
+                    </td>
+                    
                     <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';" style="{{ $rs->age > 55 ? 'color: red;' : '' }}">{{ $rs->age }}</td>
                     <td class="align-middle gender-column text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
                         @if($rs->sex == 'Чоловік')

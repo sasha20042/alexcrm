@@ -71,9 +71,8 @@
             <input type="hidden" name="manager" class="form-control fs-6" id="manager" value="{{ auth()->user()->name }}" readonly>
             
             <div class="row">
-                <div class="col-md-6">
-                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+                <div class="col-md-6 border-end">
+                    
         
                         <div class="mb-3">
                             <label for="title" class="form-label fs-5">Прізвище Ім'я </label>
@@ -81,16 +80,31 @@
                         </div>
         
                         <div class="mb-3">
-                            <label for="phone" class="form-label fs-5">Номер телефону (Основний)</label>
+                            <label for="price" class="form-label fs-5 "><i class="fab fa-viber"></i> Номер телефону</label>
                             <div class="input-group">
-                                <input type="tel" name="phone" class="form-control fs-6" id="phone" placeholder="Номер телефону" pattern="^\+380[0-9]{9}$" required>
+                                <span class="input-group-text" style="height: 38px;">+</span>
+                                <input type="tel" name="price" class="form-control fs-6" id="price" placeholder="Основний Номер телефону" required>
+                               
                             </div>
                         </div>
-        
+                        
+                        
                         <div class="mb-3">
-                            <label for="additional_phone" class="form-label fs-5">Додатковий номер телефону</label>
+                            <label for="phone" class="form-label fs-5 "> Додатковий Номер телефону</label>
                             <div class="input-group">
-                                <input type="tel" name="additional_phone" class="form-control fs-6" id="additional_phone" placeholder="Додатковий номер телефону">
+                                <span class="input-group-text" style="height: 38px;">+</span>
+                                <input type="tel" name="phone" class="form-control fs-6" id="phone" placeholder="Додатковий Номер телефону" >
+                                <select class="form-select mb-2" id="social_media" name="social_media" style="max-width: 150px;">
+                                    <option value="Viber">
+                                        <i class="fab fa-viber"></i> Viber
+                                    </option>
+                                    <option value="WhatsApp">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </option>
+                                    <option value="Telegram">
+                                        Telegram
+                                    </option>
+                                </select>
                             </div>
                         </div>
         
@@ -119,10 +133,8 @@
                     </form>
                 </div>
         
-                <div class="col-md-6">
-                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-        
+                <div class="col-md-6 border-end">
+                   
                         <div class="mb-3">
                             <label for="product_code" class="form-label fs-5">Вакансія</label>
                             <input type="text" name="product_code" class="form-control fs-6" id="product_code" placeholder="Введіть вакансію" required>
@@ -146,17 +158,7 @@
                             </select>
                         </div>
         
-                        <div class="mb-3">
-                            <label class="form-check-label fs-5">Особлива Увага</label>
-                            <div class="form-check">
-                                <input type="radio" name="blacklist" class="form-check-input" id="blacklist_yes" value="yes">
-                                <label for="blacklist_yes" class="form-check-label">Так</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" name="blacklist" class="form-check-input" id="blacklist_no" value="no" checked>
-                                <label for="blacklist_no" class="form-check-label">Ні</label>
-                            </div>
-                        </div>
+                        
         
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Додати</button>
