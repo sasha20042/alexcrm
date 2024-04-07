@@ -30,6 +30,7 @@
         Route::get('edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
         Route::put('edit/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('destroy/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+        
     });
      Route::group(['prefix' => 'project'], function () {
         Route::get('', [ProjectController::class, 'index'])->name('project');
@@ -39,6 +40,8 @@
         Route::get('edit/{id}', [ProjectController::class, 'edit'])->name('project.edit');
         Route::put('update/{id}', [ProjectController::class, 'update'])->name('project.update'); // Оновлено назву маршруту
         Route::delete('destroy/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
+        
+
     });
      
  

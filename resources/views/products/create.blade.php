@@ -135,10 +135,14 @@
         
                 <div class="col-md-6 border-end">
                    
-                        <div class="mb-3">
-                            <label for="product_code" class="form-label fs-5">Вакансія</label>
-                            <input type="text" name="product_code" class="form-control fs-6" id="product_code" placeholder="Введіть вакансію" required>
-                        </div>
+                    <div class="mb-3">
+                        <label for="product_code" class="form-label fs-5">Вакансія</label>
+                        <select name="product_code" class="form-select fs-6" id="product_code" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    
+                    
         
                         <div class="mb-3">
                             <label for="interaction_source" class="form-label fs-5">Джерело взаємодії</label>
@@ -167,19 +171,33 @@
                 </div>
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <!-- intl-tel-input JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.1.0/js/intlTelInput.min.js" integrity="sha512-7pFvbhLztQcEePj9oGV9CKIMYsy7L9lkIpHP3/cVIKFqT5JY9WfrYXiOkLaZRWUmic/eZIamPond53lZ/liSvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- FontAwesome JS -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.1.0/js/utils.js" integrity="sha512-6eq826ZpWfomZeckvWDz/GGbZSCgexJafBx3yZ2AADpBakcTk2MFypyXpoia+rxb4Wcni+8t3HKp/3e6pJPeTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     // Ініціалізуємо intl-tel-input
-    $("#phone").intlTelInput({
-            preferredCountries: ["ua", "ru"], // Налаштування переваги країн
-            separateDialCode: true, // Розділити код країни від номеру
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js", // Скрипт утиліт для intl-tel-input
-        });
+    $(document).ready(function(){
+    $.ajax({
+        url: '/api/fetch-vacancies', // Встановіть свій маршрут
+        type: 'GET',
+        dataType: 'json',
+        success: function(response){
+            console.log(response);
+            var options = '<option value="" disabled selected hidden>Оберіть вакансію</option>';
+            $.each(response, function(index, item){
+                options += '<option value="'+item.vacancy+'">'+item.vacancy+'</option>';
+            });
+            $('#product_code').html(options);
+        }
+    });
+});
+
 
 </script>
 @endsection

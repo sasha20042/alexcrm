@@ -91,4 +91,9 @@ class ProjectController extends Controller
   
         return redirect()->route('project')->with('success', 'Видалив, ну і ок)');
     }
+    public function fetchVacancies()
+    {
+        $vacancy = Project::select('id', 'vacancy')->get(); // Виберіть необхідні поля
+        return response()->json($vacancy);
+    }
 }

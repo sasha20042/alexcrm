@@ -470,17 +470,22 @@
 
         function toggleMenu() {
     var menuContent = document.querySelector('.menu-content');
-    menuContent.style.display === 'block' ? menuContent.style.display = 'none' : menuContent.style.display = 'block';
+    if (menuContent.style.display === 'block' || getComputedStyle(menuContent).display === 'block') {
+        menuContent.style.display = 'none';
+    } else {
+        menuContent.style.display = 'block';
+    }
 }
 
 // Закриття меню при кліку за його межами
-document.addEventListener('mousedown', function(event) {
+document.addEventListener('click', function(event) {
     var menuContent = document.querySelector('.menu-content');
     var menuButton = document.querySelector('.menu-button');
     if (!menuContent.contains(event.target) && event.target !== menuButton) {
         menuContent.style.display = 'none';
     }
 });
+
 
 
         function saveChanges(vacancyId) {
