@@ -50,6 +50,7 @@
     .btn-primary:hover {
         background-color: #0056b3;
     }
+    
 </style>
 <!-- intl-tel-input CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -60,6 +61,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.1.0/css/intlTelInput.css" integrity="sha512-CwPZ5+QkF7eO5vaRmlLuHCUH6TpTdlzE4j7ndsbvguECOYG6nmkJwMK+JLFR3DCtDzGIEbC7nUPYUdK2e7bCPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- FontAwesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>
+    <style>
+        #social_media {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, Montserrat, fontAwesome;
+          
+        }
+    </style>
     <script src="https://kit.fontawesome.com/b440ab2580.js" crossorigin="anonymous"></script>
 
     <div class="container">
@@ -80,7 +88,7 @@
                         </div>
         
                         <div class="mb-3">
-                            <label for="price" class="form-label fs-5 "><i class="fab fa-viber"></i> Номер телефону</label>
+                            <label for="price" class="form-label fs-5 "><i class="fa-brands fa-viber"></i> Номер телефону</label>
                             <div class="input-group">
                                 <span class="input-group-text" style="height: 38px;">+</span>
                                 <input type="tel" name="price" class="form-control fs-6" id="price" placeholder="Основний Номер телефону" required>
@@ -92,17 +100,18 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label fs-5 "> Додатковий Номер телефону</label>
                             <div class="input-group">
+                                
                                 <span class="input-group-text" style="height: 38px;">+</span>
                                 <input type="tel" name="phone" class="form-control fs-6" id="phone" placeholder="Додатковий Номер телефону" >
                                 <select class="form-select mb-2" id="social_media" name="social_media" style="max-width: 150px;">
                                     <option value="Viber">
-                                        <i class="fab fa-viber"></i> Viber
+                                        <span class="input-group-text">Viber &#xf409;
                                     </option>
                                     <option value="WhatsApp">
-                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                        WhatsApp  &#xf232;
                                     </option>
                                     <option value="Telegram">
-                                        Telegram
+                                        Telegram &#xf2c6;
                                     </option>
                                 </select>
                             </div>
