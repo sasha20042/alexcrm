@@ -52,45 +52,35 @@
         }
     </style>
     <div class="container">
-        <h1 class="mb-4">Додати Проект</h1>
+        <h1 class="mb-4">Додати Виїзд</h1>
         <hr />
 
-        <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('depart.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="row mb-3">
                 <div class="col">
-                    <label for="countrySelect" class="form-label">Країна:</label>
-                    <select name="country" id="countrySelect" required class="form-select">
-                        <option value="Угорщина">Угорщина</option>
-                        <option value="Словаччина">Словаччина</option>
-                        <option value="Чехія">Чехія</option>
-                    </select>
+                    <label for="countrySelect" class="form-label">Проект\завод</label>
+                    <input type="text" name="title" id="companyInput" class="form-control" placeholder="Проект\завод">
                 </div>
                 <div class="col">
-                    <label for="companyInput" class="form-label">Агенція:</label>
-                    <input type="text" name="company" id="companyInput" class="form-control" placeholder="Компанія">
+                    <label for="companyInput" class="form-label">Термін набору</label>
+                    <input type="text" name="date" id="companyInput" class="form-control" placeholder="Дата">
                 </div>
             </div>
 
             <div class="row mb-3">
                 <div class="col">
-                    <label for="cityInput" class="form-label">Місто:</label>
-                    <input type="text" name="city" id="cityInput" class="form-control" placeholder="Місто">
+                    <label for="cityInput" class="form-label">Загальна Кількість людей</label>
+                    <input type="text" name="city" id="cityInput" class="form-control" placeholder="Кількість">
                 </div>
                 <div class="col">
-                    <label for="vacancyInput" class="form-label">Завод:</label>
-                    <input type="text" name="vacancy" id="vacancyInput" class="form-control" placeholder="Вакансія">
+                    <label for="vacancyInput" class="form-label">Інформація виїзду:</label>
+                    <input type="text" name="description" id="vacancyInput" class="form-control" placeholder="Тип виїзду">
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="jobInput" class="form-label">Робота:</label>
-                    <input type="text" name="job" id="jobInput" class="form-control" placeholder="Робота">
-                </div>
-
-            </div>
+            
 
             <div class="col">
                 <button type="submit" class="btn btn-primary mt-4">Додати</button>

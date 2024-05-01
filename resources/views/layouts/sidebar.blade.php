@@ -25,10 +25,15 @@
   <li class="nav-item">
       <a class="nav-link" href="{{ route('products') }}">
           <i class="fas fa-fw fa-users"></i>
-          <span>Клієнти</span>
+          <span>Кандидати</span>
       </a>
   </li>
-
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('depart') }}">
+        <i class="fas fa-fw fa-car"></i>
+        <span>Виїзди</span>
+    </a>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="{{ route('project') }}">
         <i class="fas fa-fw fa-folder"></i>

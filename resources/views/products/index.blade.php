@@ -99,7 +99,7 @@ h1, h2, h3 {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <div class="d-flex align-items-center justify-content-between">
         <h1 class="mb-0">Список</h1>
-        <a href="{{ route('products.create') }}" class="btn btn-primary">Додати клієнта</a>
+        <a href="{{ route('products.create') }}" class="btn btn-primary">Додати Кандидата</a>
     </div>
     <hr />
     @if(Session::has('success'))
@@ -163,7 +163,7 @@ h1, h2, h3 {
     onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
     @if($rs->description == 'На опрацюванні')
         <span class="badge bg-primary py-2 px-2  text-white">{{ $rs->description }}</span>
-    @elseif($rs->description == 'Відправлено на роботу')
+    @elseif($rs->description == 'Відправлено на роботу' || $rs->description == 'На оформленні' )
         <span class="badge bg-success py-2 px-2  text-white">{{ $rs->description }}</span>
     @elseif($rs->description == 'На резерв')
         <span class="badge bg-warning py-2 px-2  text-white">{{ $rs->description }}</span>

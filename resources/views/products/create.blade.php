@@ -11,7 +11,7 @@
     .container {
         background-color: #ffffff;
         margin-top: 30px;
-        padding: 30px;
+        padding: 10px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
@@ -50,17 +50,40 @@
     .btn-primary:hover {
         background-color: #0056b3;
     }
+    .iti {
+            width: 100%;
+        }
+
+        .intl-tel-input {
+            width: calc(100% - 100px); /* Зменшуємо ширину на 100px */
+        }
+
+        .intl-tel-input .selected-flag {
+            height: auto !important;
+            width: 30px !important;
+        }
+
+        .intl-tel-input .selected-flag .iti-flag {
+            margin-top: -2px !important;
+        }
+
+        .intl-tel-input .selected-flag .iti-arrow {
+            margin-top: -2px !important;
+        }
     
 </style>
+
 <!-- intl-tel-input CSS -->
+
+<script src="build/js/countrySelect.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
    
-    <!-- intl-tel-input CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.1.0/css/intlTelInput.css" integrity="sha512-CwPZ5+QkF7eO5vaRmlLuHCUH6TpTdlzE4j7ndsbvguECOYG6nmkJwMK+JLFR3DCtDzGIEbC7nUPYUdK2e7bCPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- FontAwesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/>
     <style>
         #social_media {
@@ -71,7 +94,7 @@
     <script src="https://kit.fontawesome.com/b440ab2580.js" crossorigin="anonymous"></script>
 
     <div class="container">
-        <h3 class="mb-4">Додавай кандидата, {{ auth()->user()->name }}</h3> 
+        <h3 class="mb-4">Внесення кандидатів, {{ auth()->user()->name }}</h3> 
         <hr />
     
         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
@@ -81,28 +104,30 @@
             <div class="row">
                 <div class="col-md-6 border-end">
                     
-        
+         <div class="mb-3">
+                            
+                            <label for="price" class="form-label fs-5 "><i class="fa-brands fa-viber"></i> Номер телефону</label>
+                            <div class="input-group">
+                                
+                                <input id="phone" style="width: 500px;" type="tel" name="price" class="form-control fs-6" id="price" required>
+                               
+                            </div>
+                            
+                        </div>
                         <div class="mb-3">
                             <label for="title" class="form-label fs-5">Прізвище Ім'я </label>
                             <input type="text" name="title" class="form-control fs-6" id="title" placeholder="Введіть ПІБ" required>
                         </div>
         
-                        <div class="mb-3">
-                            <label for="price" class="form-label fs-5 "><i class="fa-brands fa-viber"></i> Номер телефону</label>
-                            <div class="input-group">
-                                <span class="input-group-text" style="height: 38px;">+</span>
-                                <input type="tel" name="price" class="form-control fs-6" id="price" placeholder="Основний Номер телефону" required>
-                               
-                            </div>
-                        </div>
+                       
                         
                         
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="phone" class="form-label fs-5 "> Додатковий Номер телефону</label>
                             <div class="input-group">
                                 
                                 <span class="input-group-text" style="height: 38px;">+</span>
-                                <input type="tel" name="phone" class="form-control fs-6" id="phone" placeholder="Додатковий Номер телефону" >
+                                <input type="tel" name="phone" class="form-control fs-6" id="phonee" placeholder="Додатковий Номер телефону" >
                                 <select class="form-select mb-2" id="social_media" name="social_media" style="max-width: 150px;">
                                     <option value="Viber">
                                         <span class="input-group-text">Viber &#xf409;
@@ -116,29 +141,57 @@
                                 </select>
                             </div>
                         </div>
+         --}}
+         <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label fs-5">Стать</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sex" id="male" value="Чоловік" required>
+                    <label class="form-check-label" for="male">Чоловік</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sex" id="female" value="Жінка" required>
+                    <label class="form-check-label" for="female">Жінка</label>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="age" class="form-label fs-5">Вік</label>
+                <input type="text" name="age" class="form-control fs-6" id="age" required>
+            </div>
+        </div>
+        
+        
+        <div class="mb-3">
+            <label for="citizenship" class="form-label fs-5">Громадянство</label>
+            <select name="citizenship" class="form-select fs-6" id="citizenship" required>
+                <option value="" selected disabled>Виберіть країну</option>
+                <option value="Угорщина">Угорщина</option>
+                <option value="Україна">Україна</option>
+                <option value="Словаччина">Словаччина</option>
+                <option value="Чехія">Чехія</option>
+                <!-- Додайте інші країни за потреби -->
+            </select>
+        </div>
+        
         
                         <div class="mb-3">
-                            <label for="sex" class="form-label fs-5">Стать</label>
-                            <select name="sex" class="form-select" id="sex" required>
-                                <option value="Чоловік">Чоловік</option>
-                                <option value="Жінка">Жінка</option>
+                            <label for="country" class="form-label fs-5">Місцезнаходження (Країна)</label>
+                            <select id="country" name="location" class="form-control fs-6" required>
+                                <option value="">Виберіть країну</option>
+                                <option value="Україна">Україна</option>
+                                <option value="Словаччина">Словаччина</option>
+                                <option value="Угорщина">Угорщина</option>
+                                <option value="Чехія">Чехія</option>
                             </select>
                         </div>
-        
+                        
                         <div class="mb-3">
-                            <label for="age" class="form-label fs-5">Вік</label>
-                            <input type="text" name="age" class="form-control fs-6" id="age" required>
+                            <label for="region" class="form-label fs-5">Місцезнаходження (Область)</label>
+                            <select id="region" name="region" class="form-control fs-6" required disabled>
+                                <option value="">Виберіть область</option>
+                            </select>
                         </div>
-        
-                        <div class="mb-3">
-                            <label for="citizenship" class="form-label fs-5">Громадянство</label>
-                            <input type="text" name="citizenship" class="form-control fs-6" id="citizenship" placeholder="Громадянство" required>
-                        </div>
-        
-                        <div class="mb-3">
-                            <label for="location" class="form-label fs-5">Місцезнаходження</label>
-                            <input type="text" name="location" class="form-control fs-6" id="location" required>
-                        </div>
+                        
                     </form>
                 </div>
         
@@ -153,15 +206,24 @@
                     
                     
         
-                        <div class="mb-3">
-                            <label for="interaction_source" class="form-label fs-5">Джерело взаємодії</label>
-                            <input type="text" name="interaction_source" class="form-control fs-6" id="interaction_source" placeholder="Джерело взаємодії" required>
-                        </div>
+                    <div class="mb-3">
+                        <label for="interaction_source" class="form-label fs-5">Джерело взаємодії</label>
+                        <select name="interaction_source" class="form-select fs-6" id="interaction_source" required>
+                            <option value="" selected disabled>Виберіть джерело взаємодії</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="YouTube">Telegram</option>
+                            <!-- Додайте інші соціальні мережі за потреби -->
+                        </select>
+                    </div>
+                    
         
                         <div class="mb-3">
                             <label for="description" class="form-label fs-5">Статус</label>
                             <select name="description" class="form-select fs-6" id="description" required>
                                 <option value="На опрацюванні">На опрацюванні</option>
+                                <option value="На оформленні">На оформленні</option>
                                 <option value="Відправлено на роботу">Відправлено на роботу</option>
                                 <option value="На резерв">На резерв</option>
                                 <option value="Відмовився">Відмовився</option>
@@ -180,11 +242,11 @@
                 </div>
             </div>
         </div>
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <!-- intl-tel-input JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.1.0/js/intlTelInput.min.js" integrity="sha512-7pFvbhLztQcEePj9oGV9CKIMYsy7L9lkIpHP3/cVIKFqT5JY9WfrYXiOkLaZRWUmic/eZIamPond53lZ/liSvg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- FontAwesome JS -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
@@ -206,6 +268,69 @@
         }
     });
 });
+
+   const phoneInputField = document.querySelector("#phone");
+   const phoneInput = window.intlTelInput(phoneInputField, {
+  preferredCountries: ["ua", "cz", "hu", "sk"],
+  utilsScript: "/intl-tel-input/js/utils.js?1712939239769" 
+});
+
+
+   
+// Прикріпіть обробник події для подання форми
+$('form').submit(function(event) {
+    // Зупиняємо стандартну відправку форми
+    event.preventDefault();
+
+    // Отримуємо значення номера телефону разом із кодом країни в форматі E.164
+    const phoneNumber = phoneInput.getNumber(intlTelInputUtils.numberFormat.E164);
+
+    // Оновити значення поля введення телефону перед відправленням форми
+    $('#phone').val(phoneNumber);
+
+    // Відправляємо форму через Ajax
+    $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(), // Відправляємо дані форми
+        success: function(response) {
+            window.location.href = '/products'; // Обробляємо успішну відповідь
+        },
+        error: function(xhr, status, error) {
+            // Якщо статус помилки - ERR_CONNECTION_CLOSED, ігноруємо її
+            if (status === 'error' && xhr.status === 0 && xhr.statusText === 'error') {
+                return; // Ігноруємо помилку
+            }
+            
+            // В інших випадках обробляємо помилку
+            console.error(status, error);
+        }
+    });
+});
+const countrySelect = document.getElementById('country');
+    const regionSelect = document.getElementById('region');
+
+    const regions = {
+        Україна: ["Вінницька", "Волинська", "Дніпропетровська", "Донецька", "Житомирська", "Закарпатська", "Запорізька", "Івано-Франківська", "Київська", "Кіровоградська", "Луганська", "Львівська", "Миколаївська", "Одеська", "Полтавська", "Рівненська", "Сумська", "Тернопільська", "Харківська", "Херсонська", "Хмельницька", "Черкаська", "Чернівецька", "Чернігівська", "Місто Київ", "Місто Севастополь"],
+        Словаччина: ["Банськобистрицький", "Братиславський", "Кошицький", "Нітранський", "Пряшівський", "Тренчінський", "Трнавський", "Жилінський", "Місто Братислава"],
+        Угорщина: ["Будапешт", "Бач-Кішкун", "Бекеш", "Боршод-Абауж-Земплен", "Чонград", "Фейер", "Дьер", "Жала", "Гьор", "Хевеш", "Йічке-Кішкун", "Комаром-Естергом", "Ноґрад", "Пешт", "Сомоги", "Сабольч-Сатмар-Берег", "Толна", "Ваш"],
+        Чехія: ["Градец-Кралове", "Ліберець", "Моравосілезький", "Оломоуц", "Пардубіце", "Пльзень", "Прага", "Северо-Чеський", "Среднечеський", "Южно-Моравський", "Край Височина", "Край Южночешский", "Моравськосілезький", "Пардубицкий", "Пльзеньский", "Стредочеський", "Усті-над-Лабем", "Карловарский", "Край Пардубицкий", "Край Либерецкий", "Край Моравскослезский", "Край Оломоуцкий", "Край Пльзеньский", "Край Северо-Моравский", "Край Среднеческий", "Край Южночешский", "Злінський"]
+    };
+
+    countrySelect.addEventListener('change', function() {
+        const country = this.value;
+        const countryRegions = regions[country] || [];
+
+        regionSelect.innerHTML = '<option value="">Виберіть область</option>';
+        regionSelect.disabled = countryRegions.length === 0;
+
+        countryRegions.forEach(function(region) {
+            const option = document.createElement('option');
+            option.value = region;
+            option.textContent = region;
+            regionSelect.appendChild(option);
+        });
+    });
 
 
 </script>

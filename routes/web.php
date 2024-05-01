@@ -4,7 +4,8 @@
  use App\Http\Controllers\AuthController;
  use App\Http\Controllers\ProductController;
  use App\Http\Controllers\ProjectController;
- 
+ use App\Http\Controllers\DepartController;
+
  Route::get('/', [AuthController::class, 'login'])->name('login');
  
  Route::group(['prefix' => 'auth'], function () {
@@ -43,7 +44,16 @@
         
 
     });
-     
+    Route::group(['prefix' => 'depart'], function () {
+        Route::get('', [DepartController::class, 'index'])->name('depart');
+        Route::get('create', [DepartController::class, 'create'])->name('depart.create');
+        Route::post('store', [DepartController::class, 'store'])->name('depart.store');
+        Route::get('show/{id}', [DepartController::class, 'show'])->name('depart.show');
+        Route::get('edit/{id}', [DepartController::class, 'edit'])->name('depart.edit');
+        Route::put('edit/{id}', [DepartController::class, 'update'])->name('depart.update');
+        Route::delete('destroy/{id}', [DepartController::class, 'destroy'])->name('depart.destroy');
+        
+    });
  
      Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
  });
