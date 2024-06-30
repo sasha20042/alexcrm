@@ -122,26 +122,7 @@
                        
                         
                         
-                        {{-- <div class="mb-3">
-                            <label for="phone" class="form-label fs-5 "> Додатковий Номер телефону</label>
-                            <div class="input-group">
-                                
-                                <span class="input-group-text" style="height: 38px;">+</span>
-                                <input type="tel" name="phone" class="form-control fs-6" id="phonee" placeholder="Додатковий Номер телефону" >
-                                <select class="form-select mb-2" id="social_media" name="social_media" style="max-width: 150px;">
-                                    <option value="Viber">
-                                        <span class="input-group-text">Viber &#xf409;
-                                    </option>
-                                    <option value="WhatsApp">
-                                        WhatsApp  &#xf232;
-                                    </option>
-                                    <option value="Telegram">
-                                        Telegram &#xf2c6;
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-         --}}
+                       
          <div class="row">
             <div class="col-md-6 mb-3">
                 <label class="form-label fs-5">Стать</label><br>
@@ -232,12 +213,57 @@
                                 <option value="Ми відмовили">Ми відмовили</option>
                             </select>
                         </div>
-        
+                        <div class="mb-3">
+                            <label for="documentType" class="form-label fs-5">Тип документа</label>
+                            <select name="documentType" class="form-select fs-6" id="documentType">
+                                <option value="Біо паспорт">Біо паспорт</option>
+                                <option value="Діюча Віза">Діюча Віза</option>
+                                <option value="Закрита віза">Закрита віза</option>
+                                <option value="Діючий Прихисток">Діючий Прихисток</option>
+                                <option value="Закритий Прихисток">Закритий Прихисток</option>
+                                <option value="Відмова в прихистку">Відмова в прихистку</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-primary" id="additionalInfoBtn">Додаткова інформація</button>
+                        </div>
                         
+                        <div id="additionalInfo" style="display: none;">
+                            <!-- Пункт Тип документа -->
+                            
+                        
+                            <!-- Пункт Досвід працевлаштування в ЄС -->
+                            <div class="mb-3">
+                                <label for="euExperience" class="form-label fs-5">Досвід працевлаштування в ЄС</label>
+                                <select name="euExperience" class="form-select fs-6" id="euExperience">
+                                    <option value="Ні">Ні</option>
+                                    <option value="Так">Так</option>
+                                    
+                                </select>
+                            </div>
+                        
+                            <!-- Блок з питаннями, якщо є досвід працевлаштування в ЄС -->
+                            <div id="euExperienceQuestions" style="display: none;">
+                                <div class="mb-3">
+                                    <label for="euCountriesWorked" class="form-label fs-5">В яких країнах працювали</label>
+                                    <input type="text" name="euCountriesWorked" class="form-control fs-6" id="euCountriesWorked">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="euFactoryWorked" class="form-label fs-5">На якому заводі працювали</label>
+                                    <input type="text" name="euFactoryWorked" class="form-control fs-6" id="euFactoryWorked">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="euCompanyWorked" class="form-label fs-5">Від якої фірми працювали</label>
+                                    <input type="text" name="euCompanyWorked" class="form-control fs-6" id="euCompanyWorked">
+                                </div>
+                            </div>
+                        </div>
         
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Додати</button>
                         </div>
+                        
+                                                
                     </form>
                 </div>
             </div>
@@ -252,6 +278,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/20.1.0/js/utils.js" integrity="sha512-6eq826ZpWfomZeckvWDz/GGbZSCgexJafBx3yZ2AADpBakcTk2MFypyXpoia+rxb4Wcni+8t3HKp/3e6pJPeTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+    
+     document.getElementById('additionalInfoBtn').addEventListener('click', function() {
+        var additionalInfo = document.getElementById('additionalInfo');
+        if (additionalInfo.style.display === 'none') {
+            additionalInfo.style.display = 'block';
+        } else {
+            additionalInfo.style.display = 'none';
+        }
+    });
+    document.getElementById('euExperience').addEventListener('change', function() {
+        var euExperienceQuestions = document.getElementById('euExperienceQuestions');
+        if (this.value === 'Так') {
+            euExperienceQuestions.style.display = 'block';
+        } else {
+            euExperienceQuestions.style.display = 'none';
+        }
+    });
     // Ініціалізуємо intl-tel-input
     $(document).ready(function(){
     $.ajax({
@@ -331,7 +374,14 @@ const countrySelect = document.getElementById('country');
             regionSelect.appendChild(option);
         });
     });
-
+    document.getElementById('euExperience').addEventListener('change', function() {
+        var euExperienceQuestions = document.getElementById('euExperienceQuestions');
+        if (this.value === 'Так') {
+            euExperienceQuestions.style.display = 'block';
+        } else {
+            euExperienceQuestions.style.display = 'none';
+        }
+    });
 
 </script>
 @endsection

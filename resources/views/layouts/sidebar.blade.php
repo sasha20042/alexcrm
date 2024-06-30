@@ -1,4 +1,13 @@
+<style>
+  .sidebar-wrapper {
+    height: 100vh; /* Висота sidebar відповідно до висоти вікна */
+    position: sticky;
+    top: 0;
+    /* Додає вертикальну прокрутку, якщо контент перевищує висоту sidebar */
+  }
+</style>
 
+<div class="sidebar-wrapper">
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
   
     <!-- Sidebar - Brand -->
@@ -59,3 +68,4 @@
     
     
   </ul>
+</div>

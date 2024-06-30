@@ -64,7 +64,7 @@
                     <input type="text" name="title" id="companyInput" class="form-control" placeholder="Проект\завод">
                 </div>
                 <div class="col">
-                    <label for="companyInput" class="form-label">Термін набору</label>
+                    <label for="companyInput" class="form-label">Дата виїзду</label>
                     <input type="text" name="date" id="companyInput" class="form-control" placeholder="Дата">
                 </div>
             </div>

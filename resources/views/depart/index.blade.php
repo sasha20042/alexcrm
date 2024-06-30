@@ -53,14 +53,14 @@
                 <div class="card-body">
                     <h2 class="card-title font-weight-bold">{{ $depart->title }}</h2>
                     <p class="card-text"><strong>Кількість людей:</strong> {{ $depart->city }}</p>
-                    <p class="card-text"><strong>Дата:</strong> {{ $depart->date }}</p>
+                    <p class="card-text"><strong>Дата:</strong> {{ \Carbon\Carbon::parse($depart->date)->format('d.m.Y') }}</p>
                     <p class="card-text"><strong>Виїзд:</strong> {{ $depart->description }}</p>
                     <a href="{{ route('depart.edit', $depart->id) }}"> <i class="fas fa-pencil-alt float-right"></i></a>
-                    <form action="{{ route('depart.destroy', $depart->id) }}" method="POST" onsubmit="return confirm('Точно видалити?')">
+                    {{-- <form action="{{ route('depart.destroy', $depart->id) }}" method="POST" onsubmit="return confirm('Точно видалити?')">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn p-0"><i class="fas fa-trash"></i></button>
-                    </form>
+                    </form> --}}
                 </div>
             </div>
         </div>

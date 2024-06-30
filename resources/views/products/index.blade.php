@@ -4,6 +4,16 @@
   
 @section('contents')
 <link rel="preconnect" href="https://fonts.gstatic.com">
+<!-- Підключення jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Підключення DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.min.css">
+
+<!-- Підключення DataTables JavaScript -->
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&family=Work+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -96,7 +106,17 @@ h1, h2, h3 {
         margin-right: 5px;
     }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
+
+<!-- jQuery (необхідний для DataTables) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+
+
     <div class="d-flex align-items-center justify-content-between">
         <h1 class="mb-0">Список</h1>
         <a href="{{ route('products.create') }}" class="btn btn-primary">Додати Кандидата</a>
@@ -107,7 +127,7 @@ h1, h2, h3 {
             {{ Session::get('success') }}
         </div>
     @endif
-    <table class="table table-striped table-bordered" style="color: black;">
+    <table id="datatable" class="table table-striped table-bordered" style="color: black;">
         <thead class="table-primary">
             <tr>
                 <th>№</th>
@@ -125,59 +145,52 @@ h1, h2, h3 {
             </tr>
         </thead>
         <tbody>
-            @if($product->count() > 0)
-                @foreach($product as $rs)
+            @if($products->count() > 0)
+                @foreach($products as $rs)
                 <tr>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $loop->iteration }}</td>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->created_at->format('d.m.y') }}</td>
-                    <td class="align-middle .name-column text-center " onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
+                    <td class="align-middle text-center ">{{ $loop->iteration }}</td>
+                    <td class="align-middle text-center">{{ $rs->created_at->format('d.m.y') }}</td>
+                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
                         @if($rs->blacklist == 'yes')
                             <span style="color: red; font-weight: bold; font-size: 20px;">!</span>
                         @endif
                         {{ $rs->title }}
                     </td>
-                    <td class="align-middle text-center" >
+                    <td class="align-middle text-center">
                         {{ $rs->price }}
                         <a href="viber://chat?number={{ $rs->price }}" target="_blank">
                             <i class="fab fa-viber" style="color: #665cac;"></i>
                         </a>
                     </td>
-                    
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';" style="{{ $rs->age > 55 ? 'color: red;' : '' }}">{{ $rs->age }}</td>
-                    <td class="align-middle gender-column text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
+                    <td class="align-middle text-center" style="{{ $rs->age > 55 ? 'color: red;' : '' }}">{{ $rs->age }}</td>
+                    <td class="align-middle text-center">
                         @if($rs->sex == 'Чоловік')
                             <i class="fas fa-male gender-icon" style="color: blue;"></i>
                         @elseif($rs->sex == 'Жінка')
                             <i class="fas fa-female gender-icon" style="color: rgb(246, 25, 62);"></i>
                         @endif
                     </td>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
-                        
+                    <td class="align-middle text-center">
                         {{ $rs->location }}
                     </td>
-                
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->citizenship }}</td>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->product_code }}</td>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">{{ $rs->manager }}</td>
-                    <td class="align-middle text-center description-column" 
-    onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
-    @if($rs->description == 'На опрацюванні')
-        <span class="badge bg-primary py-2 px-2  text-white">{{ $rs->description }}</span>
-    @elseif($rs->description == 'Відправлено на роботу' || $rs->description == 'На оформленні' )
-        <span class="badge bg-success py-2 px-2  text-white">{{ $rs->description }}</span>
-    @elseif($rs->description == 'На резерв')
-        <span class="badge bg-warning py-2 px-2  text-white">{{ $rs->description }}</span>
-    @elseif($rs->description == 'Відмовився')
-        <span class="badge bg-danger py-2 px-2  text-white">{{ $rs->description }}</span>
-    @elseif($rs->description == 'Уточнення')
-        <span class="badge bg-info py-2 px-2 ">{{ $rs->description }}</span>
-    @elseif($rs->description == 'Підбір вакансії')
-        <span class="badge bg-secondary py-2 px-2 ">{{ $rs->description }}</span>
-    @endif
-</td>
-
-
-
+                    <td class="align-middle text-center">{{ $rs->citizenship }}</td>
+                    <td class="align-middle text-center">{{ $rs->product_code }}</td>
+                    <td class="align-middle text-center">{{ $rs->manager }}</td>
+                    <td class="align-middle text-center">
+                        @if($rs->description == 'На опрацюванні')
+                            <span class="badge bg-primary py-2 px-2 text-white">{{ $rs->description }}</span>
+                        @elseif($rs->description == 'Відправлено на роботу' || $rs->description == 'На оформленні' )
+                            <span class="badge bg-success py-2 px-2 text-white">{{ $rs->description }}</span>
+                        @elseif($rs->description == 'На резерв')
+                            <span class="badge bg-warning py-2 px-2 text-white">{{ $rs->description }}</span>
+                        @elseif($rs->description == 'Відмовився')
+                            <span class="badge bg-danger py-2 px-2 text-white">{{ $rs->description }}</span>
+                        @elseif($rs->description == 'Уточнення')
+                            <span class="badge bg-info py-2 px-2">{{ $rs->description }}</span>
+                        @elseif($rs->description == 'Підбір вакансії')
+                            <span class="badge bg-secondary py-2 px-2">{{ $rs->description }}</span>
+                        @endif
+                    </td>
                     <td class="align-middle action-icon text-center">
                         <form action="{{ route('products.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Точно видалити?')">
                             @csrf
@@ -189,12 +202,27 @@ h1, h2, h3 {
                 @endforeach
             @else
                 <tr>
-                    <td class="text-center" colspan="5">Не знайдено</td>
+                    <td class="text-center" colspan="12">Не знайдено</td>
                 </tr>
             @endif
         </tbody>
     </table>
+    
     <script>
+     
+ 
+let table = new DataTable('#datatable', {
+    language: {
+        url: '//cdn.datatables.net/plug-ins/2.0.8/i18n/uk.json',
+    },
+    responsive: true
+});
+
+
+    </script>
+    
+    <script>
+        
         // Отримуємо елемент, в якому відображається вік
         var ageDisplay = document.getElementById('ageDisplay');
 

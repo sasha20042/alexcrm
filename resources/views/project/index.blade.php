@@ -75,7 +75,7 @@
         .vacancy-cards {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 5px;
             margin-top: 10px;
         }
 
@@ -90,7 +90,7 @@
             /* Зменшення інтервалу між текстовими елементами */
             overflow: hidden;
             /* Заборона виділення за межі блоку */
-            margin-right: 10px;
+            margin-right: 5px;
         }
 
         .modal-overlay {
@@ -146,6 +146,48 @@
             transform: translateY(-2px);
             /* Додано анімацію */
         }
+        .divider {
+    border: 1px solid gold;
+    margin: 20px 0;
+}
+/* Основний контейнер */
+#countries .row, #agency-container .row, #vacancy-container .row {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+/* Картки країн, агенцій та вакансій */
+ .agency-card, .vacancy-card {
+    flex: 1 0 5%; /* Розмір карток (менший) */
+    margin: 10px;
+    border: 1px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background-color: #ffffff;
+}
+
+.country-card:hover, .agency-card:hover, .vacancy-card:hover {
+    transform: scale(1.05);
+}
+
+
+
+/* Кнопки в модальних вікнах */
+.divider {
+    border: 1px solid gold;
+    margin: 20px 0;
+}
+
+/* Кнопки додати агенцію/вакансію */
+
+
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -166,284 +208,288 @@
             {{ Session::get('success') }}
         </div>
     @endif
-    <div class="country-card" data-country="Угорщина">
-        <img src="{{ asset('admin_assets/img/hungary.png') }}" alt="Угорщина Прапор">
-        <span>Угорщина</span>
-    </div>
+    
 
-    <div class="country-card" data-country="Словаччина">
-        <img src="{{ asset('admin_assets/img/slovakia.png') }}" alt="Словаччина Прапор">
-        <span>Словаччина</span>
-    </div>
-
-    <div class="country-card" data-country="Чехія">
-        <img src="{{ asset('admin_assets/img/czech-republic.png') }}" alt="Чехія Прапор">
-        <span>Чехія</span>
-    </div>
-
-    <br>
-    <br>
-
-    @php
-        $uniqueCountries = $project->pluck('country')->unique();
-    @endphp
-
-    @foreach ($uniqueCountries as $country)
-        <div class="country-block" id="{{ $country }}">
-
-            <div class="company-cards">
-                @php
-                    $uniqueCompanies = $project->where('country', $country)->pluck('company')->unique();
-                @endphp
-
-                @foreach ($uniqueCompanies as $companyIndex => $company)
-                    <div class="card company-card" data-country="{{ $country }}" data-company="{{ $company }}">
-                        <!-- Ваш код для компаній -->
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $company }}</h5>
-                            <p class="card-text">
-                                {{ $project->where('country', $country)->where('company', $company)->first()->city }}</p>
-                            <button class="btn btn-secondary details-btn"
-                                data-index="{{ $companyIndex }}">Детальніше</button>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            <hr style="border-color: gold; border-width: 4px ;">
-            <div class="vacancy-cards" id="{{ $country }}" style="display: none;">
-                @foreach ($uniqueCompanies as $companyIndex => $company)
-                    @php
-                        $vacancies = $project->where('country', $country)->where('company', $company);
-                    @endphp
-
-                    @foreach ($vacancies as $vacancyIndex => $vacancy)
-                        <div class="card vacancy-card" style="margin: 10px; display: none;"
-                            data-index="{{ $companyIndex }}">
-                            <!-- Ваш код для вакансій -->
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $vacancy->vacancy }}</h5>
-                                <p class="card-text">{{ $vacancy->job }}</p>
-                                <button type="button" class="btn btn-primary"
-                                    onclick="openPDFEditor('{{ $vacancy->id }}');generatePDF('{{ $vacancy->id }}');">Редагувати</button>
-                                <div id="pdfEditorModalOverlay_{{ $vacancy->id }}" class="modal-overlay"
-                                    style="display: none;"></div>
-                                <div id="pdfEditorModal_{{ $vacancy->id }}"
-                                    style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 9999; max-width: calc(900px + 5%); overflow-y: hidden; max-height: calc(110vh + 10px); overflow-y: auto;">
-                                    <div style="display: flex; align-items: center;">
-
-
-
-                                        <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')"
-                                            class="btn btn-success mr-2">
-                                            <i class="fas fa-download"></i> Скачати PDF
-                                        </button>
-
-                                        <button type="button" onclick="saveAsPNG('{{ $vacancy->id }}')"
-                                            class="btn btn-primary">
-                                            <i class="far fa-save"></i> Зберегти як PNG
-                                        </button>
-
-                                        {{-- <h4 style="color: #333; margin-left: 10px;">Проект</h4> --}}
-                                        <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')"
-                                            style="background-color: #ec7878; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-left: auto;">✖</button>
-                                    </div>
-
-
-                                    <hr style="border-top: 1px solid #ddd; margin-bottom: 15px;">
-                                    <div style="display: flex; flex-wrap: wrap; overflow-y: auto;">
-                                        <div id="pdfContainer_{{ $vacancy->id }}"
-                                            style="flex: 1; height: auto; margin-right: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 1px; background-color: #fff; overflow-y: hidden;">
-                                            <canvas id="pdfCanvas_{{ $vacancy->id }}"
-                                                style="width: 100%; height: 100%;"></canvas>
-                                        </div>
-
-
-                                        <!-- Форма, справа -->
-                                        <div style="flex: 1; max-height: 60vh; overflow-y: auto; margin-right: 20px;">
-                                            <!-- Ваша форма тут -->
-                                            <form id="vacancyForm_{{ $vacancy->id }}"
-                                                action="{{ route('project.update', $vacancy->id) }}" method="POST"
-                                                style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background-color: #fff;">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="_method" value="PUT">
-
-                                                <label for="statusInput_{{ $vacancy->id }}"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Статус:</label>
-                                                <select id="statusInput_{{ $vacancy->id }}" name="status"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-                                                    <option value="active"
-                                                        {{ $vacancy->status == 'active' ? 'selected' : '' }}>Активний
-                                                    </option>
-                                                    <option value="inactive"
-                                                        {{ $vacancy->status == 'inactive' ? 'selected' : '' }}>Не активний
-                                                    </option>
-                                                </select>
-
-
-                                                <label for="countryInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Країна:</label>
-                                                <input type="text" id="countryInput_{{ $vacancy->id }}"
-                                                    value="{{ $country }}" readonly
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="projectNameInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Назва
-                                                    проекту/заводу:</label>
-                                                <input type="text" id="projectNameInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->vacancy }}"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-
-                                                <label for="factorySpecializationInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Спеціалізація
-                                                    заводу:</label>
-                                                <input type="text" id="factorySpecializationInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->factorySpecialization }}"
-                                                    placeholder="Спеціалізація заводу"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="workLocationInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Місце
-                                                    роботи:</label>
-                                                <input type="text" id="workLocationInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->workLocation }}" placeholder="Місце роботи"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="jobTitleInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Назва
-                                                    професії:</label>
-                                                <input type="text" id="jobTitleInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->jobTitle }}" placeholder="Назва професії"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="genderAgeRestrictionsInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Обмеження
-                                                    щодо статі та віку:</label>
-                                                <input type="text" id="genderAgeRestrictionsInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->genderAgeRestrictions }}"
-                                                    placeholder="Обмеження щодо статі та віку"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="shortDetailsInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Короткі
-                                                    відомості:</label>
-                                                <textarea id="shortDetailsInput_{{ $vacancy->id }}" placeholder="Короткі відомості"
-                                                    style="width: 100%;height: 100px;  padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->shortDetails }}</textarea>
-
-                                                <label for="productionChangesInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Наявність
-                                                    змін на виробництві:</label>
-                                                <input type="text" id="productionChangesInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->productionChanges }}"
-                                                    placeholder="Наявність змін на виробництві"
-                                                    style="width: 100%;  padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="workingHoursInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Кількість
-                                                    робочих годин:</label>
-                                                <input type="text" id="workingHoursInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->workingHours }}"
-                                                    placeholder="Кількість робочих годин"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="salaryInput_{{ $vacancy->id }}"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Заробітна
-                                                    плата:</label>
-                                                <textarea id="salaryInput_{{ $vacancy->id }}" placeholder="Заробітна плата"
-                                                    style="width: 100%; height: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->salary }}</textarea>
-
-                                                <label for="accommodationConditionsInput_{{ $vacancy->id }}"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Умови
-                                                    проживання:</label>
-                                                <textarea id="accommodationConditionsInput_{{ $vacancy->id }}" name="accommodationConditions"
-                                                    placeholder="Умови проживання"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->accommodationConditions }}</textarea>
-
-                                                <label for="mealConditionsInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Умови
-                                                    харчування:</label>
-                                                <textarea id="mealConditionsInput_{{ $vacancy->id }}" placeholder="Умови харчування"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->mealConditions }}</textarea>
-
-
-                                                <label for="transportationInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Транспортування:</label>
-                                                <input type="text" id="transportationInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->transportation }}" placeholder="Транспортування"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <label for="additionalExpensesInput"
-                                                    style="color: #333; font-weight: bold; margin-bottom: 5px;">Додаткові
-                                                    витрати:</label>
-                                                <input type="text" id="additionalExpensesInput_{{ $vacancy->id }}"
-                                                    value="{{ $vacancy->additionalExpenses }}"
-                                                    placeholder="Додаткові витрати"
-                                                    style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                                                <br>
-                                                <button type="button" onclick="generatePDF('{{ $vacancy->id }}')"
-                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Згенерувати</button>
-                                                <br><br>
-                                                <button type="button" onclick="saveChanges('{{ $vacancy->id }}')"
-                                                    style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Зберегти
-                                                    зміни
-                                                </button>
-
-
-
-                                        </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    @endforeach
-                @endforeach
-            </div>
+    <div id="countries">
+        <div class="country-card" data-country="Угорщина">
+            <img src="{{ asset('admin_assets/img/hungary.png') }}" alt="Угорщина Прапор">
+            <span>Угорщина</span>
         </div>
+    
+        <div class="country-card" data-country="Словаччина">
+            <img src="{{ asset('admin_assets/img/slovakia.png') }}" alt="Словаччина Прапор">
+            <span>Словаччина</span>
+        </div>
+    
+        <div class="country-card" data-country="Чехія">
+            <img src="{{ asset('admin_assets/img/czech-republic.png') }}" alt="Чехія Прапор">
+            <span>Чехія</span>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="agency-container" class="mt-3" style="display: none;">
+        <h3>Агенції</h3>
+        <div id="agencies" class="row"></div>
+        <div class="col-md-2">
+        
+            <button id="add-agency-btn" class="btn btn-secondary btn-block">Додати агенцію</button>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div id="vacancy-container" class="mt-3" style="display: none;">
+        <h3>Вакансії</h3>
+        <div id="vacancies" class="row"></div>
+        
+        <div class="col-md-2">
+      
+            <button id="add-vacancy-btn" class="btn btn-secondary btn-block">Додати вакансію</button>
+        </div>
+    </div>
+
+    @foreach ($project as $vacancy)
+    <div id="pdfEditorModalOverlay_{{ $vacancy->id }}" class="modal-overlay"
+        style="display: none;"></div>
+    <div id="pdfEditorModal_{{ $vacancy->id }}"
+        style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 9999; max-width: calc(900px + 5%); overflow-y: hidden; max-height: calc(110vh + 10px); overflow-y: auto;">
+        <div style="display: flex; align-items: center;">
+
+
+
+            <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')"
+                class="btn btn-success mr-2">
+                <i class="fas fa-download"></i> Скачати PDF
+            </button>
+
+            <button type="button" onclick="saveAsPNG('{{ $vacancy->id }}')"
+                class="btn btn-primary">
+                <i class="far fa-save"></i> Зберегти як PNG
+            </button>
+
+            {{-- <h4 style="color: #333; margin-left: 10px;">Проект</h4> --}}
+            <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')"
+                style="background-color: #ec7878; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-left: auto;">✖</button>
+        </div>
+
+
+        <hr style="border-top: 1px solid #ddd; margin-bottom: 15px;">
+        <div style="display: flex; flex-wrap: wrap; overflow-y: auto;">
+            <div id="pdfContainer_{{ $vacancy->id }}"
+                style="flex: 1; height: auto; margin-right: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 1px; background-color: #fff; overflow-y: hidden;">
+                <canvas id="pdfCanvas_{{ $vacancy->id }}"
+                    style="width: 100%; height: 100%;"></canvas>
+            </div>
+
+
+            <!-- Форма, справа -->
+            <div style="flex: 1; max-height: 60vh; overflow-y: auto; margin-right: 20px;">
+                <!-- Ваша форма тут -->
+                <form id="vacancyForm_{{ $vacancy->id }}"
+                    action="{{ route('project.update', $vacancy->id) }}" method="POST"
+                    style="margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 10px; background-color: #fff;">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="_method" value="PUT">
+
+                    <label for="statusInput_{{ $vacancy->id }}"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Статус:</label>
+                    <select id="statusInput_{{ $vacancy->id }}" name="status"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+                        <option value="active"
+                            {{ $vacancy->status == 'active' ? 'selected' : '' }}>Активний
+                        </option>
+                        <option value="inactive"
+                            {{ $vacancy->status == 'inactive' ? 'selected' : '' }}>Не активний
+                        </option>
+                    </select>
+
+
+                    <label for="countryInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Країна:</label>
+                    <input type="text" id="countryInput_{{ $vacancy->id }}"
+                       
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="projectNameInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Назва
+                        проекту/заводу:</label>
+                    <input type="text" id="projectNameInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->vacancy }}"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+
+                    <label for="factorySpecializationInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Спеціалізація
+                        заводу:</label>
+                    <input type="text" id="factorySpecializationInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->factorySpecialization }}"
+                        placeholder="Спеціалізація заводу"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="workLocationInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Місце
+                        роботи:</label>
+                    <input type="text" id="workLocationInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->workLocation }}" placeholder="Місце роботи"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="jobTitleInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Назва
+                        професії:</label>
+                    <input type="text" id="jobTitleInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->jobTitle }}" placeholder="Назва професії"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="genderAgeRestrictionsInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Обмеження
+                        щодо статі та віку:</label>
+                    <input type="text" id="genderAgeRestrictionsInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->genderAgeRestrictions }}"
+                        placeholder="Обмеження щодо статі та віку"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="shortDetailsInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Короткі
+                        відомості:</label>
+                    <textarea id="shortDetailsInput_{{ $vacancy->id }}" placeholder="Короткі відомості"
+                        style="width: 100%;height: 100px;  padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->shortDetails }}</textarea>
+
+                    <label for="productionChangesInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Наявність
+                        змін на виробництві:</label>
+                    <input type="text" id="productionChangesInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->productionChanges }}"
+                        placeholder="Наявність змін на виробництві"
+                        style="width: 100%;  padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="workingHoursInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Кількість
+                        робочих годин:</label>
+                    <input type="text" id="workingHoursInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->workingHours }}"
+                        placeholder="Кількість робочих годин"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="salaryInput_{{ $vacancy->id }}"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Заробітна
+                        плата:</label>
+                    <textarea id="salaryInput_{{ $vacancy->id }}" placeholder="Заробітна плата"
+                        style="width: 100%; height: 100px; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->salary }}</textarea>
+
+                    <label for="accommodationConditionsInput_{{ $vacancy->id }}"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Умови
+                        проживання:</label>
+                    <textarea id="accommodationConditionsInput_{{ $vacancy->id }}" name="accommodationConditions"
+                        placeholder="Умови проживання"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->accommodationConditions }}</textarea>
+
+                    <label for="mealConditionsInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Умови
+                        харчування:</label>
+                    <textarea id="mealConditionsInput_{{ $vacancy->id }}" placeholder="Умови харчування"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">{{ $vacancy->mealConditions }}</textarea>
+
+
+                    <label for="transportationInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Транспортування:</label>
+                    <input type="text" id="transportationInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->transportation }}" placeholder="Транспортування"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <label for="additionalExpensesInput"
+                        style="color: #333; font-weight: bold; margin-bottom: 5px;">Додаткові
+                        витрати:</label>
+                    <input type="text" id="additionalExpensesInput_{{ $vacancy->id }}"
+                        value="{{ $vacancy->additionalExpenses }}"
+                        placeholder="Додаткові витрати"
+                        style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
+
+                    <br>
+                    <button type="button" onclick="generatePDF('{{ $vacancy->id }}')"
+                        style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Згенерувати</button>
+                    <br><br>
+                    <button type="button" onclick="saveChanges('{{ $vacancy->id }}')"
+                        style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Зберегти
+                        зміни
+                    </button>
+
+
+
+            </div>
+            </form>
+
+        </div>
+    </div>
     @endforeach
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+
+    <!-- Підключення jQuery, Popper.js, та Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            // Ховаємо всі блоки крім блоків країн
-            $('.country-block, .company-cards, .vacancy-card, .details-btn').hide();
-
-            $(document).on('click', '.country-card', function() {
-                var countryId = $(this).data('country');
-
-                // Ховаємо всі блоки крім блоків компаній в обраній країні
-                $('.country-block').hide();
-                $('#' + countryId).show();
-
-                // Ховаємо всі блоки крім блоків компаній
-                $('.company-cards').hide();
-
-                // Показуємо блок компаній в обраній країні
-                $('#' + countryId + ' .company-cards').show();
-
-                // Ховаємо всі блоки вакансій та кнопок "Детальніше"
-                $('.details-btn').show();
-            });
-
-            $(document).on('click', '.details-btn', function() {
-                var index = $(this).data('index');
-
-                // Ховаємо всі блоки вакансій
-                $('.vacancy-card').hide();
-
-                // Показуємо вакансії для обраної компанії
-                $('.vacancy-card[data-index="' + index + '"]').show();
+        document.querySelectorAll('.country-card').forEach(card => {
+            card.addEventListener('click', function () {
+                const country = this.getAttribute('data-country');
+                fetchAgencies(country);
+                document.getElementById('vacancy-container').style.display = 'none'; // Приховування вакансій
             });
         });
+
+        function fetchAgencies(country) {
+            const agencies = @json($project->groupBy('country'));
+            const selectedAgencies = agencies[country];
+
+            const agenciesDiv = document.getElementById('agencies');
+            agenciesDiv.innerHTML = '';
+
+            if (selectedAgencies) {
+                const uniqueCompanies = [...new Set(selectedAgencies.map(item => item.company))];
+                uniqueCompanies.forEach(company => {
+                    const agencyBtn = document.createElement('div');
+                    agencyBtn.className = 'col-md-2';
+                    agencyBtn.innerHTML = `<div class="agency-card text-center" data-company="${company}">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${company}</h5>
+                                                </div>
+                                            </div>`;
+                    agencyBtn.querySelector('.agency-card').addEventListener('click', () => fetchVacancies(country, company));
+                    agenciesDiv.appendChild(agencyBtn);
+                });
+            }
+
+            document.getElementById('agency-container').style.display = 'block';
+            document.getElementById('vacancies').innerHTML = ''; // Очищення списку вакансій
+        }
+
+        function fetchVacancies(country, company) {
+            const vacancies = @json($project->groupBy(['country', 'company']));
+            const selectedVacancies = vacancies[country][company];
+
+            const vacanciesDiv = document.getElementById('vacancies');
+            vacanciesDiv.innerHTML = '';
+
+            if (selectedVacancies) {
+                selectedVacancies.forEach(vacancy => {
+                    const vacancyBtn = document.createElement('div');
+                    vacancyBtn.className = 'col-md-2';
+                    vacancyBtn.innerHTML = `<div class="vacancy-card text-center" data-vacancy="${vacancy.vacancy}">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${vacancy.vacancy}</h5>
+                                                </div>
+                                            </div>`;
+                    vacancyBtn.querySelector('.vacancy-card').addEventListener('click', () => openPDFEditor(vacancy.id));
+                    vacanciesDiv.appendChild(vacancyBtn);
+                });
+            }
+
+            document.getElementById('vacancy-container').style.display = 'block';
+        }
 
         function openPDFEditor(vacancyId) {
             document.getElementById('pdfEditorModalOverlay_' + vacancyId).style.display = 'block';
@@ -455,15 +501,22 @@
             document.getElementById('pdfEditorModal_' + vacancyId).style.display = 'none';
         }
 
+    </script>
+</body>
+</html>
 
-        function toggleMenu() {
-            var menuContent = document.querySelector('.menu-content');
-            if (menuContent.style.display === 'block' || getComputedStyle(menuContent).display === 'block') {
-                menuContent.style.display = 'none';
-            } else {
-                menuContent.style.display = 'block';
-            }
-        }
+    
+   
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+
+    <script>
+       
 
 
         function saveChanges(vacancyId) {

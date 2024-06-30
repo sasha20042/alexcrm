@@ -59,22 +59,22 @@
         <div class="row mb-3">
             <div class="col">
                 <label for="countrySelect" class="form-label">Проект\завод</label>
-                <input type="text" name="title" id="companyInput" class="form-control" placeholder="Проект\завод">
+                <input type="text" name="title" id="companyInput" class="form-control" placeholder="Проект\завод" value="{{ $depart->title }}">
             </div>
             <div class="col">
-                <label for="companyInput" class="form-label">Термін набору</label>
-                <input type="text" name="date" id="companyInput" class="form-control" placeholder="Дата">
+                <label for="companyInput" class="form-label">Дата виїзду</label>
+                <input type="text" name="date" id="companyInput" class="form-control" placeholder="Дата" value="{{ $depart->date }}">
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col">
                 <label for="cityInput" class="form-label">Загальна Кількість людей</label>
-                <input type="text" name="city" id="cityInput" class="form-control" placeholder="Кількість">
+                <input type="text" name="city" id="cityInput" class="form-control" placeholder="Кількість" value="{{ $depart->city }}">
             </div>
             <div class="col">
                 <label for="vacancyInput" class="form-label">Інформація виїзду:</label>
-                <input type="text" name="description" id="vacancyInput" class="form-control" placeholder="Тип виїзду">
+                <input type="text" name="description" id="vacancyInput" class="form-control" placeholder="Тип виїзду" value="{{ $depart->description }}">
             </div>
         </div>
 
