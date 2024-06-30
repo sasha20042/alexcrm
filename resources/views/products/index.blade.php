@@ -148,9 +148,9 @@ h1, h2, h3 {
             @if($products->count() > 0)
                 @foreach($products as $rs)
                 <tr>
-                    <td class="align-middle text-center ">{{ $loop->iteration }}</td>
+                    <td class="align-middle text-center">{{ $loop->iteration }}</td>
                     <td class="align-middle text-center">{{ $rs->created_at->format('d.m.y') }}</td>
-                    <td class="align-middle text-center" onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
+                    <td class="align-middle text-center">
                         @if($rs->blacklist == 'yes')
                             <span style="color: red; font-weight: bold; font-size: 20px;">!</span>
                         @endif
@@ -207,6 +207,7 @@ h1, h2, h3 {
             @endif
         </tbody>
     </table>
+    
     
     <script>
      

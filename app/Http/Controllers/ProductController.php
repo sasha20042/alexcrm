@@ -13,19 +13,21 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $currentManager = Auth::user()->name; // Отримати ім'я поточного користувача
+{
+    $currentManager = Auth::user()->name; // Отримати ім'я поточного користувача
 
-        if ($currentManager == 'Alex Bertych' || $currentManager == 'Oleksandr Kopolovets') {
-            // Якщо поточний користувач - Alex Bertych, то показати всіх клієнтів
-            $products = Product::all();
-        } else {
-            // Інакше показати тільки тих клієнтів, яких веде поточний менеджер
-            $products = Product::where('manager', $currentManager)->get();
-        }
-
-        return view('products.index', compact('products', 'currentManager'));
+    if ($currentManager == 'Alex Bertych') {
+        // Якщо поточний користувач - Alex Bertych, то показати всіх клієнтів
+        $products = Product::orderBy('created_at', 'desc')->get();
+    } else {
+        // Інакше показати тільки тих клієнтів, яких веде поточний менеджер
+        $products = Product::where('manager', $currentManager)
+                           ->orderBy('created_at', 'desc')
+                           ->get();
     }
+
+    return view('products.index', compact('products', 'currentManager'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -38,12 +40,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        Product::create($request->all());
-
-        return redirect()->route('products.index')->with('success', 'Добавив, харош!');
-    }
+    
 
     /**
      * Display the specified resource.
@@ -68,24 +65,28 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $product = Product::findOrFail($id);
+    public function store(Request $request)
+{
+    Product::create($request->all());
 
-        $product->update($request->all());
+    return redirect()->route('products')->with('success', 'Добавив, харош!');
+}
 
-        return redirect()->route('products.index')->with('success', 'Оновив!');
-    }
+public function update(Request $request, string $id)
+{
+    $product = Product::findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $product = Product::findOrFail($id);
+    $product->update($request->all());
 
-        $product->delete();
+    return redirect()->route('products')->with('success', 'Оновив!');
+}
 
-        return redirect()->route('products.index')->with('success', 'Видалив, ну і ок)');
-    }
+public function destroy(string $id)
+{
+    $product = Product::findOrFail($id);
+
+    $product->delete();
+
+    return redirect()->route('products')->with('success', 'Видалив, ну і ок)');
+}
 }
