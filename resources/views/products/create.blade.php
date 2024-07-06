@@ -10,34 +10,30 @@
 
     .container {
         background-color: #ffffff;
-        margin-top: 30px;
+        margin: 30px;
         padding: 10px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-
-    h1 {
-        color: #007bff;
-        text-align: center;
-    }
-
-    hr {
-        border-color: #007bff;
-    }
-
-    .form-label {
-        color: #343a40;
-        font-weight: bold;
-    }
-
-    .form-control {
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-    }
-
-    textarea.form-control {
-        resize: vertical;
-    }
+        .form-label {
+            font-weight: bold;
+        }
+        .form-check-label, .form-control, .form-select {
+            font-size: 1rem;
+        }
+        .input-group input {
+            width: 100%;
+        }
+        .form-section {
+            margin-bottom: 30px;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        #additionalInfo {
+            margin-top: 20px;
+        }
 
     .btn-primary {
         background-color: #007bff;
@@ -103,90 +99,123 @@
             
             <div class="row">
                 <div class="col-md-6 border-end">
+                    <!-- Основна інформація -->
+                    <h4>Основна інформація</h4>
                     
-         <div class="mb-3">
-                            
-                            <label for="price" class="form-label fs-5 "><i class="fa-brands fa-viber"></i> Номер телефону</label>
-                            <div class="input-group">
-                                
-                                <input id="phone" style="width: 500px;" type="tel" name="price" class="form-control fs-6" id="price" required>
-                               
+                    <div class="mb-3">
+                        <label for="price" class="form-label fs-5"><i class="fa-brands fa-viber"></i> Номер телефону</label>
+                        <div class="input-group">
+                            <input id="phone" style="width: 100%;" type="tel" name="price" class="form-control fs-6" id="price" required>
+                        </div>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="title" class="form-label fs-5">Прізвище Ім'я</label>
+                        <input type="text" name="title" class="form-control fs-6" id="title" placeholder="Введіть ПІБ" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fs-5">Стать</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sex" id="male" value="Чоловік" required>
+                                <label class="form-check-label" for="male">Чоловік</label>
                             </div>
-                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="sex" id="female" value="Жінка" required>
+                                <label class="form-check-label" for="female">Жінка</label>
+                            </div>
                         </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="age" class="form-label fs-5">Вік</label>
+                            <input type="number" name="age" class="form-control fs-6" id="age" required style="width: 100px;">
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fs-5">Сімейна пара?</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasFamily" id="hasFamilyYes" value="Так" required>
+                                <label class="form-check-label" for="hasFamilyYes">Так</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasFamily" id="hasFamilyNo" value="Ні" required>
+                                <label class="form-check-label" for="hasFamilyNo">Ні</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fs-5">Є діти?</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasChildren" id="hasChildrenYes" value="Так" required>
+                                <label class="form-check-label" for="hasChildrenYes">Так</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasChildren" id="hasChildrenNo" value="Ні" required>
+                                <label class="form-check-label" for="hasChildrenNo">Ні</label>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div id="childrenOptions" style="display: none;">
                         <div class="mb-3">
-                            <label for="title" class="form-label fs-5">Прізвище Ім'я </label>
-                            <input type="text" name="title" class="form-control fs-6" id="title" placeholder="Введіть ПІБ" required>
+                            <label for="childrenCount" class="form-label fs-5">Скільки дітей</label>
+                            <input type="number" id="childrenCount" name="childrenCount" class="form-control fs-6">
                         </div>
-        
-                       
-                        
-                        
-                       
-         <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label fs-5">Стать</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sex" id="male" value="Чоловік" required>
-                    <label class="form-check-label" for="male">Чоловік</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sex" id="female" value="Жінка" required>
-                    <label class="form-check-label" for="female">Жінка</label>
-                </div>
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for="age" class="form-label fs-5">Вік</label>
-                <input type="text" name="age" class="form-control fs-6" id="age" required>
-            </div>
-        </div>
-        
-        
-        <div class="mb-3">
-            <label for="citizenship" class="form-label fs-5">Громадянство</label>
-            <select name="citizenship" class="form-select fs-6" id="citizenship" required>
-                <option value="" selected disabled>Виберіть країну</option>
-                <option value="Угорщина">Угорщина</option>
-                <option value="Україна">Україна</option>
-                <option value="Словаччина">Словаччина</option>
-                <option value="Чехія">Чехія</option>
-                <!-- Додайте інші країни за потреби -->
-            </select>
-        </div>
-        
-        
-                        <div class="mb-3">
-                            <label for="country" class="form-label fs-5">Місцезнаходження (Країна)</label>
-                            <select id="country" name="location" class="form-control fs-6" required>
-                                <option value="">Виберіть країну</option>
-                                <option value="Україна">Україна</option>
-                                <option value="Словаччина">Словаччина</option>
-                                <option value="Угорщина">Угорщина</option>
-                                <option value="Чехія">Чехія</option>
-                            </select>
+                        <div id="childrenAges" class="mb-3">
+                            <!-- Додаткові поля для віку дітей будуть додані за допомогою JS -->
                         </div>
-                        
-                        <div class="mb-3">
-                            <label for="region" class="form-label fs-5">Місцезнаходження (Область)</label>
-                            <select id="region" name="region" class="form-control fs-6" required disabled>
-                                <option value="">Виберіть область</option>
-                            </select>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label class="form-label fs-5">Наявність домашніх улюбленців</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="hasPets" name="hasPets" value="Так">
+                            <label class="form-check-label" for="hasPets">Так</label>
                         </div>
-                        
-                    </form>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="citizenship" class="form-label fs-5">Громадянство</label>
+                        <select name="citizenship" class="form-select fs-6" id="citizenship" required>
+                            <option value="" selected disabled>Виберіть країну</option>
+                            <option value="Угорщина">Угорщина</option>
+                            <option value="Україна">Україна</option>
+                            <option value="Словаччина">Словаччина</option>
+                            <option value="Чехія">Чехія</option>
+                        </select>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="country" class="form-label fs-5">Місцезнаходження (Країна)</label>
+                        <select id="country" name="location" class="form-select fs-6" required>
+                            <option value="">Виберіть країну</option>
+                            <option value="Україна">Україна</option>
+                            <option value="Словаччина">Словаччина</option>
+                            <option value="Угорщина">Угорщина</option>
+                            <option value="Чехія">Чехія</option>
+                        </select>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="region" class="form-label fs-5">Місцезнаходження (Область)</label>
+                        <select id="region" name="region" class="form-select fs-6" required disabled>
+                            <option value="">Виберіть область</option>
+                        </select>
+                    </div>
                 </div>
-        
-                <div class="col-md-6 border-end">
-                   
+    
+                <div class="col-md-6">
+                    <!-- Додаткова інформація -->
+                    <h4>Додаткова інформація</h4>
+    
                     <div class="mb-3">
                         <label for="product_code" class="form-label fs-5">Вакансія</label>
                         <select name="product_code" class="form-select fs-6" id="product_code" required>
                             <option value=""></option>
                         </select>
                     </div>
-                    
-                    
-        
+    
                     <div class="mb-3">
                         <label for="interaction_source" class="form-label fs-5">Джерело взаємодії</label>
                         <select name="interaction_source" class="form-select fs-6" id="interaction_source" required>
@@ -195,79 +224,119 @@
                             <option value="Instagram">Instagram</option>
                             <option value="LinkedIn">LinkedIn</option>
                             <option value="YouTube">Telegram</option>
-                            <!-- Додайте інші соціальні мережі за потреби -->
                         </select>
                     </div>
+    
+                    <div class="mb-3">
+                        <label for="description" class="form-label fs-5">Статус</label>
+                        <select name="description" class="form-select fs-6" id="description" required>
+                            <option value="На опрацюванні">На опрацюванні</option>
+                            <option value="На оформленні">На оформленні</option>
+                            <option value="Відправлено на роботу">Відправлено на роботу</option>
+                            <option value="На резерв">На резерв</option>
+                            <option value="Відмовився">Відмовився</option>
+                            <option value="Уточнення">Уточнення</option>
+                            <option value="Підбір вакансії">Підбір вакансії</option>
+                            <option value="Ми відмовили">Ми відмовили</option>
+                        </select>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="documentType" class="form-label fs-5">Тип документа</label>
+                        <select name="documentType" class="form-select fs-6" id="documentType">
+                            <option value="Біо паспорт">Біо паспорт</option>
+                            <option value="Айді карта">Айді карта</option>
+                            <option value="Загран паспорт">Загран паспорт</option>
+                            <option value="ID карта УВТ">ID карта УВТ</option>
+                        </select>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="residenceStatus" class="form-label fs-5">Статус перебування</label>
+                        <select name="residenceStatus" class="form-select fs-6" id="residenceStatus">
+                            <option value="Активний Прихисток">Активний Прихисток</option>
+                            <option value="Закритий Прихисток">Закритий Прихисток</option>
+                            <option value="Відмова в прихистку">Відмова в прихистку</option>
+                        </select>
+                    </div>
+    
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-primary" id="additionalInfoBtn">Додаткова інформація</button>
+                    </div>
                     
-        
+                    <div id="additionalInfo" style="display: none;">
+                        <!-- Пункт Тип документа -->
+                        
+                    
+                        <!-- Пункт Досвід працевлаштування в ЄС -->
                         <div class="mb-3">
-                            <label for="description" class="form-label fs-5">Статус</label>
-                            <select name="description" class="form-select fs-6" id="description" required>
-                                <option value="На опрацюванні">На опрацюванні</option>
-                                <option value="На оформленні">На оформленні</option>
-                                <option value="Відправлено на роботу">Відправлено на роботу</option>
-                                <option value="На резерв">На резерв</option>
-                                <option value="Відмовився">Відмовився</option>
-                                <option value="Уточнення">Уточнення</option>
-                                <option value="Підбір вакансії">Підбір вакансії</option>
-                                <option value="Ми відмовили">Ми відмовили</option>
+                            <label for="euExperience" class="form-label fs-5">Досвід працевлаштування в ЄС</label>
+                            <select name="euExperience" class="form-select fs-6" id="euExperience">
+                                <option value="Ні">Ні</option>
+                                <option value="Так">Так</option>
+                                
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="documentType" class="form-label fs-5">Тип документа</label>
-                            <select name="documentType" class="form-select fs-6" id="documentType">
-                                <option value="Біо паспорт">Біо паспорт</option>
-                                <option value="Діюча Віза">Діюча Віза</option>
-                                <option value="Закрита віза">Закрита віза</option>
-                                <option value="Діючий Прихисток">Діючий Прихисток</option>
-                                <option value="Закритий Прихисток">Закритий Прихисток</option>
-                                <option value="Відмова в прихистку">Відмова в прихистку</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <button type="button" class="btn btn-primary" id="additionalInfoBtn">Додаткова інформація</button>
-                        </div>
-                        
-                        <div id="additionalInfo" style="display: none;">
-                            <!-- Пункт Тип документа -->
-                            
-                        
-                            <!-- Пункт Досвід працевлаштування в ЄС -->
+                    
+                        <!-- Блок з питаннями, якщо є досвід працевлаштування в ЄС -->
+                        <div id="euExperienceQuestions" style="display: none;">
                             <div class="mb-3">
-                                <label for="euExperience" class="form-label fs-5">Досвід працевлаштування в ЄС</label>
-                                <select name="euExperience" class="form-select fs-6" id="euExperience">
-                                    <option value="Ні">Ні</option>
-                                    <option value="Так">Так</option>
-                                    
-                                </select>
+                                <label for="euCountriesWorked" class="form-label fs-5">В яких країнах працювали</label>
+                                <input type="text" name="euCountriesWorked" class="form-control fs-6" id="euCountriesWorked">
                             </div>
-                        
-                            <!-- Блок з питаннями, якщо є досвід працевлаштування в ЄС -->
-                            <div id="euExperienceQuestions" style="display: none;">
-                                <div class="mb-3">
-                                    <label for="euCountriesWorked" class="form-label fs-5">В яких країнах працювали</label>
-                                    <input type="text" name="euCountriesWorked" class="form-control fs-6" id="euCountriesWorked">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="euFactoryWorked" class="form-label fs-5">На якому заводі працювали</label>
-                                    <input type="text" name="euFactoryWorked" class="form-control fs-6" id="euFactoryWorked">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="euCompanyWorked" class="form-label fs-5">Від якої фірми працювали</label>
-                                    <input type="text" name="euCompanyWorked" class="form-control fs-6" id="euCompanyWorked">
-                                </div>
+                            <div class="mb-3">
+                                <label for="euFactoryWorked" class="form-label fs-5">На якому заводі працювали</label>
+                                <input type="text" name="euFactoryWorked" class="form-control fs-6" id="euFactoryWorked">
+                            </div>
+                            <div class="mb-3">
+                                <label for="euCompanyWorked" class="form-label fs-5">Від якої фірми працювали</label>
+                                <input type="text" name="euCompanyWorked" class="form-control fs-6" id="euCompanyWorked">
                             </div>
                         </div>
-        
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Додати</button>
-                        </div>
-                        
-                                                
-                    </form>
+                    </div>
+    
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Додати</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
+    </div>
+    
+    <!-- Script to toggle visibility of additional info sections -->
+    <script>
+        document.getElementById('hasFamilyYes').addEventListener('change', function() {
+            document.getElementById('familyOptions').style.display = this.checked ? 'block' : 'none';
+        });
+    
+        document.getElementById('hasChildrenYes').addEventListener('change', function() {
+            document.getElementById('childrenOptions').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('childrenCount').addEventListener('input', function() {
+            const count = parseInt(this.value);
+            const childrenAges = document.getElementById('childrenAges');
+            childrenAges.innerHTML = ''; // Очистити попередні поля
+            for (let i = 0; i < count; i++) {
+                const ageInput = document.createElement('input');
+                ageInput.type = 'number';
+                ageInput.name = `childAge_${i + 1}`;
+                ageInput.className = 'form-control fs-6 mb-2';
+                ageInput.placeholder = `Вік дитини ${i + 1}`;
+                childrenAges.appendChild(ageInput);
+            }
+        });
+    
+        // Additional Info toggle
+       
+    
+        // EU Experience Questions toggle
+        document.getElementById('euExperience').addEventListener('change', function() {
+            const euExperienceQuestions = document.getElementById('euExperienceQuestions');
+            euExperienceQuestions.style.display = this.value === 'Так' ? 'block' : 'none';
+        });
+    </script>
+    
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

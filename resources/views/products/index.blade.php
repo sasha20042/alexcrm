@@ -118,7 +118,7 @@ h1, h2, h3 {
 
 
     <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Список</h1>
+        <h1 class="mb-0">Кандидати</h1>
         <a href="{{ route('products.create') }}" class="btn btn-primary">Додати Кандидата</a>
     </div>
     <hr />
@@ -150,13 +150,14 @@ h1, h2, h3 {
                 <tr>
                     <td class="align-middle text-center">{{ $loop->iteration }}</td>
                     <td class="align-middle text-center">{{ $rs->created_at->format('d.m.y') }}</td>
-                    <td class="align-middle text-center">
+                    <td class="align-middle text-center"  onmousedown="if(event.button !== 2) window.location='{{ route('products.edit', $rs->id) }}';">
                         @if($rs->blacklist == 'yes')
                             <span style="color: red; font-weight: bold; font-size: 20px;">!</span>
                         @endif
                         {{ $rs->title }}
                     </td>
-                    <td class="align-middle text-center">
+                    <td class="align-middle text-center" style="font-size: 85%">
+                        
                         {{ $rs->price }}
                         <a href="viber://chat?number={{ $rs->price }}" target="_blank">
                             <i class="fab fa-viber" style="color: #665cac;"></i>
