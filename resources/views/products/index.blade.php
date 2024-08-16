@@ -93,12 +93,15 @@ h1, h2, h3 {
         font-size: 1.3rem;
     }
     .name-column{
-        width: 260px;
+        width: 250px;
         
 
     }
     .gender-column {
         width: 60px;
+    }
+    .age-column{
+        width: 50px;
     }
 
     .flag-icon {
@@ -128,20 +131,20 @@ h1, h2, h3 {
         </div>
     @endif
     <table id="datatable" class="table table-striped table-bordered" style="color: black;">
-        <thead class="table-primary">
+        <thead class="table-primary" style="background-color: rgb(36, 36, 36); color: white;">
             <tr>
                 <th>№</th>
                 <th>Дата</th>
                 <th class="name-column text-center">Прізвище Ім'я</th>
                 <th class="text-center">Телефон</th>
-                <th>Вік</th>
+                <th class="age-column">Вік</th>
                 <th class="gender-column text-center">Ч/Ж</th>
                 <th class="text-center">Місцезнаходження</th>
                 <th class="text-center">Громадянство</th>
                 <th class="text-center">Вакансія</th>
                 <th class="text-center">Менеджер</th>
                 <th class="text-center">Статус</th>
-                <th>Дія</th>
+                <th>Ком</th>
             </tr>
         </thead>
         <tbody>
@@ -156,9 +159,8 @@ h1, h2, h3 {
                         @endif
                         {{ $rs->title }}
                     </td>
-                    <td class="align-middle text-center" style="font-size: 85%">
-                        
-                        {{ $rs->price }}
+                    <td class="align-middle text-center" style="font-size: 85%; position: relative;">
+                        <span class="phone-number" style="cursor: pointer;">{{ $rs->price }}</span>
                         <a href="viber://chat?number={{ $rs->price }}" target="_blank">
                             <i class="fab fa-viber" style="color: #665cac;"></i>
                         </a>
@@ -170,7 +172,20 @@ h1, h2, h3 {
                         @elseif($rs->sex == 'Жінка')
                             <i class="fas fa-female gender-icon" style="color: rgb(246, 25, 62);"></i>
                         @endif
+                    
+                        @if($rs->hasFamily == 'Так')
+                            <i class="fas fa-users" style="color: green;"></i> <!-- Іконка для пари -->
+                        @endif
+                    
+                        @if($rs->hasChildren == 'Так')
+                            <i class="fas fa-child" style="color: orange;"></i> <!-- Іконка для дітей -->
+                        @endif
+                    
+                        @if($rs->hasPets == 'Так')
+                            <i class="fas fa-paw" style="color: brown;"></i> <!-- Іконка для тварин -->
+                        @endif
                     </td>
+                    
                     <td class="align-middle text-center">
                         {{ $rs->location }}
                     </td>
@@ -193,12 +208,12 @@ h1, h2, h3 {
                         @endif
                     </td>
                     <td class="align-middle action-icon text-center">
-                        <form action="{{ route('products.destroy', $rs->id) }}" method="POST" onsubmit="return confirm('Точно видалити?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn p-0"><i class="fas fa-trash"></i></button>
-                        </form>
+                        <button type="button" class="btn p-0 comment-button">
+                            <i class="fas fa-comment"></i>
+                        </button>
+                        <span class="comment-text" style="display:none;">{{ $rs->comment }}</span>
                     </td>
+                    
                 </tr>
                 @endforeach
             @else
@@ -211,8 +226,44 @@ h1, h2, h3 {
     
     
     <script>
-     
- 
+     document.addEventListener('DOMContentLoaded', function() {
+    var commentButtons = document.querySelectorAll('.comment-button');
+    
+    commentButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var commentText = button.nextElementSibling;
+            alert('Comment: ' + commentText.innerText);
+        });
+    });
+});
+     document.addEventListener('DOMContentLoaded', function() {
+    var phoneNumberElements = document.querySelectorAll('.phone-number');
+    
+    phoneNumberElements.forEach(function(phoneNumberElement) {
+        phoneNumberElement.addEventListener('mouseenter', function() {
+            phoneNumberElement.style.color = 'green';
+        });
+        
+        phoneNumberElement.addEventListener('mouseleave', function() {
+            phoneNumberElement.style.color = '';
+        });
+        
+        phoneNumberElement.addEventListener('click', function() {
+            var range = document.createRange();
+            range.selectNode(phoneNumberElement);
+            window.getSelection().removeAllRanges(); 
+            window.getSelection().addRange(range);
+
+            try {
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                alert('Номер телефону скопійовано в буфер обміну: ' + phoneNumberElement.innerText);
+            } catch (err) {
+                console.error('Не вдалося скопіювати текст', err);
+            }
+        });
+    });
+});
 let table = new DataTable('#datatable', {
     language: {
         url: '//cdn.datatables.net/plug-ins/2.0.8/i18n/uk.json',

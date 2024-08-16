@@ -16,6 +16,8 @@ use App\Http\Controllers\ProjectController;
 |
 */
 Route::get('/fetch-vacancies', [ProjectController::class, 'fetchVacancies'])->name('fetch.vacancies');
+Route::get('/fetch-companies', [ProjectController::class, 'fetchCompanies']);
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

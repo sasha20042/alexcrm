@@ -16,7 +16,7 @@ class ProductController extends Controller
 {
     $currentManager = Auth::user()->name; // Отримати ім'я поточного користувача
 
-    if ($currentManager == 'Alex Bertych') {
+    if ($currentManager == 'Alex Bertych' || $currentManager == 'Oleksandr Kopolovets') {
         // Якщо поточний користувач - Alex Bertych, то показати всіх клієнтів
         $products = Product::orderBy('created_at', 'desc')->get();
     } else {

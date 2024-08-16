@@ -17,6 +17,20 @@ class Product extends Model
         'sex',
         'location',
         'citizenship',
-        'blacklist'
+        'blacklist',
+        'hasFamily',
+        'hasChildren',
+        'hasPets',
+        'region',
+        'documentType',
+        'residenceStatus',
+        'interaction_source',
+        'euExperience',
+        'euCountriesWorked',
+        'euFactoryWorked',
+        'euCompanyWorked',
+        'childrenCount',
+        'comment'
     ];
+    
 }

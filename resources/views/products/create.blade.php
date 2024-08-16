@@ -66,6 +66,45 @@
         .intl-tel-input .selected-flag .iti-arrow {
             margin-top: -2px !important;
         }
+        .dropdown-menu {
+    border-radius: 0.5rem;
+}
+
+.dropdown-toggle {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 0.375rem 1.75rem;
+}
+
+.dropdown-toggle:focus, .dropdown-toggle:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: #fff;
+}
+
+.dropdown-menu .form-check-label {
+    cursor: pointer;
+}
+
+.dropdown-menu .form-check-input {
+    margin-left: -1.25rem;
+}
+
+.dropdown-menu p-3 {
+    padding: 0.5rem 1rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:focus, .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
     
 </style>
 
@@ -113,9 +152,14 @@
                         <label for="title" class="form-label fs-5">Прізвище Ім'я</label>
                         <input type="text" name="title" class="form-control fs-6" id="title" placeholder="Введіть ПІБ" required>
                     </div>
-                    
+    
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-2 mb-3">
+                            <label for="age" class="form-label fs-5">Вік</label>
+                            <input type="number" name="age" class="form-control fs-6" id="age" required required min="17" max="60" style="width: 90px;">
+                            <div id="ageError" class="text-danger" style="display: none;">Вік повинен бути від 17 до 60 років.</div>
+                        </div>
+                        <div class="col-md-2 mb-3">
                             <label class="form-label fs-5">Стать</label><br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="sex" id="male" value="Чоловік" required>
@@ -126,15 +170,9 @@
                                 <label class="form-check-label" for="female">Жінка</label>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="age" class="form-label fs-5">Вік</label>
-                            <input type="number" name="age" class="form-control fs-6" id="age" required style="width: 100px;">
-                        </div>
-                    </div>
-    
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fs-5">Сімейна пара?</label><br>
+                        
+                        <div class="col-md-2 mb-3">
+                            <label class="form-label fs-5">Пара</label><br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hasFamily" id="hasFamilyYes" value="Так" required>
                                 <label class="form-check-label" for="hasFamilyYes">Так</label>
@@ -144,8 +182,8 @@
                                 <label class="form-check-label" for="hasFamilyNo">Ні</label>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fs-5">Є діти?</label><br>
+                        <div class="col-md-2 mb-3">
+                            <label class="form-label fs-5">Діти</label><br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hasChildren" id="hasChildrenYes" value="Так" required>
                                 <label class="form-check-label" for="hasChildrenYes">Так</label>
@@ -153,6 +191,17 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="hasChildren" id="hasChildrenNo" value="Ні" required>
                                 <label class="form-check-label" for="hasChildrenNo">Ні</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label class="form-label fs-5">Тварини</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasPets" id="hasPets" value="Так" required>
+                                <label class="form-check-label" for="hasPets">Так</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="hasPets" id="hasPetsNo" value="Ні" required >
+                                <label class="form-check-label" for="hasPetsNo">Ні</label>
                             </div>
                         </div>
                     </div>
@@ -164,14 +213,6 @@
                         </div>
                         <div id="childrenAges" class="mb-3">
                             <!-- Додаткові поля для віку дітей будуть додані за допомогою JS -->
-                        </div>
-                    </div>
-    
-                    <div class="mb-3">
-                        <label class="form-label fs-5">Наявність домашніх улюбленців</label><br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="hasPets" name="hasPets" value="Так">
-                            <label class="form-check-label" for="hasPets">Так</label>
                         </div>
                     </div>
     
@@ -209,13 +250,36 @@
                     <!-- Додаткова інформація -->
                     <h4>Додаткова інформація</h4>
     
+             <div class="mb-3">
+    <label for="vacanciesDropdown" class="form-label fs-5">Вакансії</label>
+    <div class="dropdown">
+        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="vacanciesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Оберіть вакансії
+        </button>
+        <ul class="dropdown-menu p-3 shadow" aria-labelledby="vacanciesDropdown" style="max-height: 200px; overflow-y: auto;">
+            <!-- Чекбокси будуть тут -->
+        </ul>
+    </div>
+</div>
+<input type="hidden" name="product_code" id="selected_vacancies">
+
                     <div class="mb-3">
-                        <label for="product_code" class="form-label fs-5">Вакансія</label>
-                        <select name="product_code" class="form-select fs-6" id="product_code" required>
-                            <option value=""></option>
+                        <label for="documentType" class="form-label fs-5">Тип документа</label>
+    <select name="documentType" class="form-select fs-6" id="documentType" onchange="toggleCountryInput()">
+                            <option value="Біо паспорт">Біо паспорт</option>
+                            <option value="Віза">Віза</option>
+                            <option value="ВНЖ">ВНЖ</option>
+                            <option value="Живность">Живность</option>
+                            <option value="Активний Прихисток">Активний Прихисток</option>
+                            <option value="Закритий Прихисток">Закритий Прихисток</option>
+                            <option value="Відмова в прихистку">Відмова в прихистку</option>
                         </select>
                     </div>
     
+                    <div class="mb-3" id="countryInputDiv" style="display: none;">
+                        <label for="countryDocument" class="form-label fs-5">Країна документу</label>
+                        <input type="text" name="residenceStatus" class="form-control fs-6" id="countryDocument">
+                    </div>
                     <div class="mb-3">
                         <label for="interaction_source" class="form-label fs-5">Джерело взаємодії</label>
                         <select name="interaction_source" class="form-select fs-6" id="interaction_source" required>
@@ -240,44 +304,27 @@
                             <option value="Ми відмовили">Ми відмовили</option>
                         </select>
                     </div>
-    
-                    <div class="mb-3">
-                        <label for="documentType" class="form-label fs-5">Тип документа</label>
-                        <select name="documentType" class="form-select fs-6" id="documentType">
-                            <option value="Біо паспорт">Біо паспорт</option>
-                            <option value="Айді карта">Айді карта</option>
-                            <option value="Загран паспорт">Загран паспорт</option>
-                            <option value="ID карта УВТ">ID карта УВТ</option>
-                        </select>
+                    <div class=" mb-3">
+                        <label for="comment" class="form-label fs-5">Коментар</label>
+                        <input type="text" name="comment" class="form-control fs-6" id="comment"  >
+                        
                     </div>
-    
-                    <div class="mb-3">
-                        <label for="residenceStatus" class="form-label fs-5">Статус перебування</label>
-                        <select name="residenceStatus" class="form-select fs-6" id="residenceStatus">
-                            <option value="Активний Прихисток">Активний Прихисток</option>
-                            <option value="Закритий Прихисток">Закритий Прихисток</option>
-                            <option value="Відмова в прихистку">Відмова в прихистку</option>
-                        </select>
-                    </div>
+                   
     
                     <div class="mb-3">
                         <button type="button" class="btn btn-primary" id="additionalInfoBtn">Додаткова інформація</button>
                     </div>
-                    
+    
                     <div id="additionalInfo" style="display: none;">
-                        <!-- Пункт Тип документа -->
-                        
-                    
                         <!-- Пункт Досвід працевлаштування в ЄС -->
                         <div class="mb-3">
                             <label for="euExperience" class="form-label fs-5">Досвід працевлаштування в ЄС</label>
                             <select name="euExperience" class="form-select fs-6" id="euExperience">
                                 <option value="Ні">Ні</option>
                                 <option value="Так">Так</option>
-                                
                             </select>
                         </div>
-                    
+    
                         <!-- Блок з питаннями, якщо є досвід працевлаштування в ЄС -->
                         <div id="euExperienceQuestions" style="display: none;">
                             <div class="mb-3">
@@ -296,15 +343,25 @@
                     </div>
     
                     <div class="mb-3">
-                        <button type="submit" class="btn btn-primary">Додати</button>
+                        <button type="submit" class="btn btn-success">Зберегти</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
     
+    
     <!-- Script to toggle visibility of additional info sections -->
     <script>
+         function toggleCountryInput() {
+        var documentType = document.getElementById('documentType').value;
+        var countryInputDiv = document.getElementById('countryInputDiv');
+        if (documentType === 'Віза' || documentType === 'Живность') {
+            countryInputDiv.style.display = 'none';
+        } else {
+            countryInputDiv.style.display = 'block';
+        }
+    }
         document.getElementById('hasFamilyYes').addEventListener('change', function() {
             document.getElementById('familyOptions').style.display = this.checked ? 'block' : 'none';
         });
@@ -328,8 +385,24 @@
         });
     
         // Additional Info toggle
-       
-    
+        document.getElementById('age').addEventListener('blur', function() {
+        const age = parseInt(this.value);
+        const ageError = document.getElementById('ageError');
+
+        if (age < 17 || age > 60) {
+            ageError.style.display = 'block';
+        } else {
+            ageError.style.display = 'none';
+        }
+
+        if (age < 17) {
+            this.value = 17;
+        } else if (age > 60) {
+            this.value = 60;
+        } else if (age < 0) {
+            this.value = 17; // або можна поставити 0, в залежності від вимог
+        }
+    });
         // EU Experience Questions toggle
         document.getElementById('euExperience').addEventListener('change', function() {
             const euExperienceQuestions = document.getElementById('euExperienceQuestions');
@@ -365,21 +438,37 @@
         }
     });
     // Ініціалізуємо intl-tel-input
-    $(document).ready(function(){
+$(document).ready(function(){
     $.ajax({
         url: '/api/fetch-vacancies', // Встановіть свій маршрут
         type: 'GET',
         dataType: 'json',
         success: function(response){
             console.log(response);
-            var options = '<option value="" disabled selected hidden>Оберіть вакансію</option>';
+            var checkboxes = '';
             $.each(response, function(index, item){
-                options += '<option value="'+item.vacancy+'">'+item.vacancy+'</option>';
+                checkboxes += '<li>';
+                checkboxes += '<div class="form-check">';
+                checkboxes += '<input class="form-check-input vacancy-checkbox" type="checkbox" value="'+item.vacancy+'" id="vacancy_'+index+'">';
+                checkboxes += '<label class="form-check-label" for="vacancy_'+index+'">'+item.vacancy+'</label>';
+                checkboxes += '</div>';
+                checkboxes += '</li>';
             });
-            $('#product_code').html(options);
+            $('.dropdown-menu').html(checkboxes);
         }
     });
+
+    $(document).on('change', '.vacancy-checkbox', function() {
+        var selectedVacancies = [];
+        $('.vacancy-checkbox:checked').each(function() {
+            selectedVacancies.push($(this).val());
+        });
+        $('#selected_vacancies').val(selectedVacancies.join(' '));
+    });
 });
+
+
+
 
    const phoneInputField = document.querySelector("#phone");
    const phoneInput = window.intlTelInput(phoneInputField, {
