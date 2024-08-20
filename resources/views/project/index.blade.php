@@ -198,8 +198,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
     <div class="d-flex align-items-center justify-content-between">
-        <h1 class="mb-0">Проекти</h1>
-        <a href="{{ route('project.create') }}" class="btn btn-primary">Додати проект</a>
+        <h1 class="mb-0">Країна</h1>
+        <a href="{{ route('project.create') }}" class="btn btn-primary">Додати вакансію</a>
 
     </div>
     <hr />
@@ -211,43 +211,38 @@
     
 
     <div id="countries">
-        <div class="country-card" data-country="Угорщина">
+        <div class="country-card" data-country="Hungary (Magyarország)">
             <img src="{{ asset('admin_assets/img/hungary.png') }}" alt="Угорщина Прапор">
             <span>Угорщина</span>
         </div>
     
-        <div class="country-card" data-country="Словаччина">
+        <div class="country-card" data-country="Slovakia (Slovensko)">
             <img src="{{ asset('admin_assets/img/slovakia.png') }}" alt="Словаччина Прапор">
             <span>Словаччина</span>
         </div>
     
-        <div class="country-card" data-country="Чехія">
+        <div class="country-card" data-country="Czech Republic (Česká republika)">
             <img src="{{ asset('admin_assets/img/czech-republic.png') }}" alt="Чехія Прапор">
             <span>Чехія</span>
         </div>
     </div>
 
-    <hr class="divider">
+
 
     <div id="agency-container" class="mt-3" style="display: none;">
         <h3>Агенції</h3>
         <div id="agencies" class="row"></div>
         <div class="col-md-2">
         
-            <button id="add-agency-btn" class="btn btn-secondary btn-block">Додати агенцію</button>
+           
         </div>
     </div>
 
-    <hr class="divider">
 
     <div id="vacancy-container" class="mt-3" style="display: none;">
         <h3>Вакансії</h3>
         <div id="vacancies" class="row"></div>
         
-        <div class="col-md-2">
-      
-            <button id="add-vacancy-btn" class="btn btn-secondary btn-block">Додати вакансію</button>
-        </div>
     </div>
 
     @foreach ($project as $vacancy)
