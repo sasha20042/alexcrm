@@ -188,19 +188,92 @@
             <div id="jobDetailsFields" style="display: none;">
                 <div class="row mb-3">
                     <div class="col-half">
-                        <label for="cityInput" class="form-label">Місто вакансії:</label>
-                        <input type="text" name="city" id="cityInput" class="form-control" placeholder="Місто">
+                        <label for="status" class="form-label">Статус:</label>
+                        <select id="status" name="status" class="form-control">
+                            <option value="active">Активний</option>
+                            <option value="inactive">Не активний</option>
+                        </select>
                     </div>
-                    <div class="col-half">
-                        <label for="jobInput" class="form-label">Назва роботи:</label>
-                        <input type="text" name="job" id="jobInput" class="form-control" placeholder="Робота">
-                    </div>
+            
+                    
                 </div>
-
+            
                 <div class="row mb-3">
                     <div class="col-half">
-                        <label for="vacancyInput" class="form-label">Завод:</label>
-                        <input type="text" name="vacancy" id="vacancyInput" class="form-control" placeholder="Завод">
+                        <label for="vacancy" class="form-label">Назва проекту/заводу:</label>
+                        <input type="text" name="vacancy" id="vacancy" class="form-control" placeholder="Назва проекту/заводу">
+                    </div>
+            
+                    <div class="col-half">
+                        <label for="factorySpecialization" class="form-label">Спеціалізація заводу:</label>
+                        <input type="text" name="factorySpecialization" id="factorySpecialization" class="form-control" placeholder="Спеціалізація заводу">
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-half">
+                        <label for="city" class="form-label">Місце роботи:</label>
+                        <input type="text" name="city" id="city" class="form-control" placeholder="Місце роботи">
+                    </div>
+            
+                    <div class="col-half">
+                        <label for="job" class="form-label">Назва професії:</label>
+                        <input type="text" name="job" id="job" class="form-control" placeholder="Назва професії">
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-half">
+                        <label for="genderAgeRestrictions" class="form-label">Обмеження щодо статі та віку:</label>
+                        <input type="text" name="genderAgeRestrictions" id="genderAgeRestrictions" class="form-control" placeholder="Обмеження щодо статі та віку">
+                    </div>
+            
+                    <div class="col-half">
+                        <label for="shortDetails" class="form-label">Короткі відомості:</label>
+                        <textarea name="shortDetails" id="shortDetails" class="form-control" placeholder="Короткі відомості"></textarea>
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-half">
+                        <label for="productionChanges" class="form-label">Наявність змін на виробництві:</label>
+                        <input type="text" name="productionChanges" id="productionChanges" class="form-control" placeholder="Наявність змін на виробництві">
+                    </div>
+            
+                    <div class="col-half">
+                        <label for="workingHours" class="form-label">Кількість робочих годин:</label>
+                        <input type="text" name="workingHours" id="workingHours" class="form-control" placeholder="Кількість робочих годин">
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-half">
+                        <label for="salary" class="form-label">Заробітна плата:</label>
+                        <textarea name="salary" id="salary" class="form-control" placeholder="Заробітна плата"></textarea>
+                    </div>
+            
+                    <div class="col-half">
+                        <label for="accommodationConditions" class="form-label">Умови проживання:</label>
+                        <textarea name="accommodationConditions" id="accommodationConditions" class="form-control" placeholder="Умови проживання"></textarea>
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-half">
+                        <label for="mealConditions" class="form-label">Умови харчування:</label>
+                        <textarea name="mealConditions" id="mealConditions" class="form-control" placeholder="Умови харчування"></textarea>
+                    </div>
+            
+                    <div class="col-half">
+                        <label for="transportation" class="form-label">Транспортування:</label>
+                        <input type="text" name="transportation" id="transportation" class="form-control" placeholder="Транспортування">
+                    </div>
+                </div>
+            
+                <div class="row mb-3">
+                    <div class="col-half">
+                        <label for="additionalExpenses" class="form-label">Додаткові витрати:</label>
+                        <input type="text" name="additionalExpenses" id="additionalExpenses" class="form-control" placeholder="Додаткові витрати">
                     </div>
                 </div>
             </div>
