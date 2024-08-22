@@ -14,7 +14,7 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
       <div class="sidebar-brand-icon">
           <!-- Ваш логотип у форматі зображення -->
-          <img src="{{ asset('admin_assets/img/logom.svg') }}" alt="Логотип" style="max-width: 100%; height: auto;">
+          <img src="{{ asset('admin_assets/img/logom.svg') }}" alt="Логотип" style="max-width: 100%; height: 200px;">
       </div>
       
   </a>
