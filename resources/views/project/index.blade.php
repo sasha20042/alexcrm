@@ -251,42 +251,51 @@
     </div>
 
     @foreach ($project as $vacancy)
-    <div id="pdfEditorModalOverlay_{{ $vacancy->id }}" class="modal-overlay"
-        style="display: none;"></div>
-        <div id="pdfEditorModal_{{ $vacancy->id }}"
-            style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 9999; max-width: calc(1350px + 7.5%); overflow-y: hidden; max-height: calc(165vh + 15px); overflow-y: auto;">
-        
+    <div id="pdfEditorModalOverlay_{{ $vacancy->id }}" class="modal-overlay" style="display: none;"></div>
+    <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 9999; max-width: calc(1350px + 7.5%); overflow-y: hidden; max-height: calc(165vh + 15px); overflow-y: auto;">
         <div style="display: flex; align-items: center;">
-
-
-
-            <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')"
-                class="btn btn-success mr-2">
+            <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')" class="btn btn-success mr-2">
                 <i class="fas fa-download"></i> Скачати PDF
             </button>
-
-            <button type="button" onclick="saveAsPNG('{{ $vacancy->id }}')"
-                class="btn btn-primary">
+            <button type="button" onclick="saveAsPNG('{{ $vacancy->id }}')" class="btn btn-primary">
                 <i class="far fa-save"></i> Зберегти як PNG
             </button>
-
-            {{-- <h4 style="color: #333; margin-left: 10px;">Проект</h4> --}}
-            <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')"
-                style="background-color: #ec7878; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-left: auto;">✖</button>
+            <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')" style="background-color: #ec7878; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-left: auto;">✖</button>
         </div>
-
 
         <hr style="border-top: 1px solid #ddd; margin-bottom: 15px;">
         <div style="display: flex; flex-wrap: wrap; overflow-y: auto;">
-            <div id="pdfContainer_{{ $vacancy->id }}"
-                style="flex: 1; height: auto; margin-right: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 1px; background-color: #fff; overflow-y: hidden;">
-                <canvas id="pdfCanvas_{{ $vacancy->id }}"
-                    style="width: 100%; height: 100%;"></canvas>
+            <div id="pdfContainer_{{ $vacancy->id }}" style="flex: 1; height: auto; margin-right: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 1px; background-color: #fff; overflow-y: hidden;">
+                <canvas id="pdfCanvas_{{ $vacancy->id }}" style="width: 100%; height: 100%;"></canvas>
             </div>
 
-
-            <!-- Форма, справа -->
+            <!-- Відображення фото -->
             <div style="flex: 1; max-height: 60vh; overflow-y: auto; margin-right: 20px;">
+                @if ($vacancy->photos)
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        @foreach (json_decode($vacancy->photos) as $photo)
+                            {{-- Виводимо{{ asset('admin_assets/img/czech-republic.png') }} шлях до фото для налагодження --}}
+                       {{--     <p>{{ Storage::url('public/' . $photo) }}</p> --}}
+                            
+
+                            <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+                                <img src="{{ Storage::url($photo) }}" alt="Фото {{ $loop->iteration }}" style="width: 100%; height: auto; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); object-fit: cover;">
+
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p>Немає доступних фото</p>
+                @endif
+            </div>
+            
+            
+            
+        
+
+            <!-- Ваша форма справа -->
+            <div style="flex: 1; max-height: 60vh; overflow-y: auto; margin-right: 20px;">
+           
                 <!-- Ваша форма тут -->
                 <form id="vacancyForm_{{ $vacancy->id }}"
                     action="{{ route('project.update', $vacancy->id) }}" method="POST"

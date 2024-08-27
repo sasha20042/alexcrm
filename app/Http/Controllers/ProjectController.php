@@ -44,11 +44,25 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        Project::create($request->all());
- 
-        return redirect()->route('project')->with('success', 'Добавив, харош!');
+{
+    $request->validate([
+        'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048', // Валідація для кожного фото
+    ]);
+  
+    $project = Project::create($request->all());
+
+    if ($request->hasFile('photos')) {
+        $photos = [];
+        foreach ($request->file('photos') as $photo) {
+            $path = $photo->store('photos', 'public'); // Зберігаємо фото в папці 'public/photos'
+            $photos[] = $path;
+        }
+        $project->photos = json_encode($photos);
+        $project->save();
     }
+
+    return redirect()->route('project')->with('success', 'Добавив, харош!');
+}
   
     /**
      * Display the specified resource.

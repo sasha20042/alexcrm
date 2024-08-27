@@ -276,7 +276,16 @@
                         <input type="text" name="additionalExpenses" id="additionalExpenses" class="form-control" placeholder="Додаткові витрати">
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-full">
+                        <label for="photos" class="form-label">Фотографії:</label>
+                        <input type="file" name="photos[]" id="photos" class="form-control" multiple>
+                        <small class="text-muted">Максимум 10 фото. Дозволені формати: jpg, png, jpeg.</small>
+                    </div>
+                </div>
+                
             </div>
+
             <input type="hidden" id="selectedCompany" name="company">
             <div class="col-full">
                 <button type="submit" class="btn btn-primary">Додати</button>

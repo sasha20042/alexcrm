@@ -26,11 +26,15 @@ class Project extends Model
     'accommodationConditions',
     'mealConditions',
     'transportation',
-    'additionalExpenses'
+    'additionalExpenses',
+    'photos'
 
 
 
 
 
+    ];
+    protected $casts = [
+        'photos' => 'array', // Автоматично конвертує JSON у масив
     ];
 }
