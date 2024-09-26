@@ -5,6 +5,7 @@
  use App\Http\Controllers\ProductController;
  use App\Http\Controllers\ProjectController;
  use App\Http\Controllers\DepartController;
+use App\Http\Controllers\TeamController;
 
  Route::get('/', [AuthController::class, 'login'])->name('login');
  
@@ -44,6 +45,17 @@
         
 
     });
+    Route::group(['prefix' => 'team'], function () {
+        Route::get('', [TeamController::class, 'index'])->name('team');
+        Route::get('create', [TeamController::class, 'create'])->name('team.create');
+        Route::post('store', [TeamController::class, 'store'])->name('team.store');
+        Route::get('show/{id}', [TeamController::class, 'show'])->name('team.show');
+        Route::get('edit/{id}', [TeamController::class, 'edit'])->name('team.edit');
+        Route::put('update/{id}', [TeamController::class, 'update'])->name('team.update'); // Оновлено назву маршруту
+        Route::delete('destroy/{id}', [TeamController::class, 'destroy'])->name('team.destroy');
+        
+
+    });
     Route::group(['prefix' => 'depart'], function () {
         Route::get('', [DepartController::class, 'index'])->name('depart');
         Route::get('create', [DepartController::class, 'create'])->name('depart.create');
@@ -56,5 +68,7 @@
     });
  
      Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+     Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');
+
  });
  

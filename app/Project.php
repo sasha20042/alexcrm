@@ -27,7 +27,7 @@ class Project extends Model
     'mealConditions',
     'transportation',
     'additionalExpenses',
-    'photos'
+    'photos', 'housing_photos', 'production_photos'
 
 
 
@@ -35,6 +35,8 @@ class Project extends Model
 
     ];
     protected $casts = [
-        'photos' => 'array', // Автоматично конвертує JSON у масив
+        'photos' => 'array',
+        'housing_photos' => 'array',
+        'production_photos' => 'array', // Автоматично конвертує JSON у масив
     ];
 }

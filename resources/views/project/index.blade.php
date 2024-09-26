@@ -101,11 +101,13 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             /* затемнення з полупрозорістю */
-            z-index: 9998;
+            z-index: 500;
             /* забезпечуємо, щоб затемнення було позаду модального вікна */
         }
 
         .modal {
+           
+
             display: flex;
             /* Додаємо Flexbox */
             position: fixed;
@@ -113,7 +115,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             /* Додаткові стилі модального вікна */
-            z-index: 9999;
+            z-index: 1000;
             /* забезпечуємо, щоб модальне вікно було перед затемненням */
         }
 
@@ -188,18 +190,32 @@
   /* Світліший фон для активної картки */
 }
 
+/* Зміна z-index для Lightbox або FancyBox */
+.lightboxOverlay,
+.lightbox,
+.fancybox-container {
+    z-index: 1000; /* Більше ніж z-index вашого модального вікна */
+}
 
 /* Кнопки додати агенцію/вакансію */
 
 
 
     </style>
+    <!-- Додайте ці посилання у <head> вашого шаблону -->
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/times-new-roman" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Liberation+Serif:wght@400;700&display=swap" rel="stylesheet">
 
+<!-- Додайте ці посилання у <head> вашого шаблону -->
+    <link href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" rel="stylesheet">
 
+    <!-- Додайте ці скрипти перед закриттям тега </body> -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.js"></script>
     <div class="d-flex align-items-center justify-content-between">
@@ -252,7 +268,8 @@
 
     @foreach ($project as $vacancy)
     <div id="pdfEditorModalOverlay_{{ $vacancy->id }}" class="modal-overlay" style="display: none;"></div>
-    <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 9999; max-width: calc(1350px + 7.5%); overflow-y: hidden; max-height: calc(165vh + 15px); overflow-y: auto;">
+    <div id="pdfEditorModal_{{ $vacancy->id }}" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #f7f7f7; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); z-index: 1000; max-width: 90%; width: 1300px; max-height: auto; overflow-y: auto;">
+
         <div style="display: flex; align-items: center;">
             <button type="button" onclick="downloadPDFButton('{{ $vacancy->id }}')" class="btn btn-success mr-2">
                 <i class="fas fa-download"></i> Скачати PDF
@@ -260,34 +277,72 @@
             <button type="button" onclick="saveAsPNG('{{ $vacancy->id }}')" class="btn btn-primary">
                 <i class="far fa-save"></i> Зберегти як PNG
             </button>
+            
             <button type="button" onclick="closePDFEditor('{{ $vacancy->id }}')" style="background-color: #ec7878; color: #fff; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; margin-left: auto;">✖</button>
+
         </div>
 
         <hr style="border-top: 1px solid #ddd; margin-bottom: 15px;">
         <div style="display: flex; flex-wrap: wrap; overflow-y: auto;">
+            <div style="flex: 1; max-height: 60vh; overflow-y: auto; margin-right: 20px;">
+
+                {{-- Відображення основних фото --}}
+                @if ($vacancy->photos)
+                    <h4>Основні фото:</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        @foreach (json_decode($vacancy->photos, true) as $photo)
+                            <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+                                <a href="{{ Storage::url($photo) }}" data-fancybox="gallery{{ $vacancy->id }}" data-caption="Фото {{ $loop->iteration }}" data-parent=".modal-content">
+                                    <img src="{{ Storage::url($photo) }}" alt="Фото {{ $loop->iteration }}" style="max-width: 100%; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p>Немає основних фото</p>
+                @endif
+            
+                {{-- Відображення фото житла --}}
+                @if ($vacancy->housing_photos)
+                    <h4>Фото житла:</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        @foreach (json_decode($vacancy->housing_photos, true) as $photo)
+                            <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+                                <a href="{{ Storage::url($photo) }}" data-fancybox="housing-gallery{{ $vacancy->id }}" data-caption="Фото житла {{ $loop->iteration }}" data-parent=".modal-content">
+                                    <img src="{{ Storage::url($photo) }}" alt="Фото житла {{ $loop->iteration }}" style="max-width: 100%; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p>Немає фото житла</p>
+                @endif
+            
+                {{-- Відображення фото з місця виробництва --}}
+                @if ($vacancy->production_photos)
+                    <h4>Фото з місця виробництва:</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        @foreach (json_decode($vacancy->production_photos, true) as $photo)
+                            <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+                                <a href="{{ Storage::url($photo) }}" data-fancybox="production-gallery{{ $vacancy->id }}" data-caption="Фото з місця виробництва {{ $loop->iteration }}" data-parent=".modal-content">
+                                    <img src="{{ Storage::url($photo) }}" alt="Фото з місця виробництва {{ $loop->iteration }}" style="max-width: 100%; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p>Немає фото з місця виробництва</p>
+                @endif
+            
+            </div>
+            
+            
             <div id="pdfContainer_{{ $vacancy->id }}" style="flex: 1; height: auto; margin-right: 20px; border: 1px solid #ddd; border-radius: 5px; padding: 1px; background-color: #fff; overflow-y: hidden;">
                 <canvas id="pdfCanvas_{{ $vacancy->id }}" style="width: 100%; height: 100%;"></canvas>
             </div>
 
             <!-- Відображення фото -->
-            <div style="flex: 1; max-height: 60vh; overflow-y: auto; margin-right: 20px;">
-                @if ($vacancy->photos)
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        @foreach (json_decode($vacancy->photos) as $photo)
-                            {{-- Виводимо{{ asset('admin_assets/img/czech-republic.png') }} шлях до фото для налагодження --}}
-                       {{--     <p>{{ Storage::url('public/' . $photo) }}</p> --}}
-                            
-
-                            <div style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
-                                <img src="{{ Storage::url($photo) }}" alt="Фото {{ $loop->iteration }}" style="width: 100%; height: auto; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); object-fit: cover;">
-
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <p>Немає доступних фото</p>
-                @endif
-            </div>
+            
             
             
             
@@ -416,20 +471,23 @@
                         value="{{ $vacancy->additionalExpenses }}"
                         placeholder="Додаткові витрати"
                         style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px;">
-
-                    <br>
-                    <button type="button" onclick="generatePDF('{{ $vacancy->id }}')"
-                        style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Згенерувати</button>
-                    <br><br>
-                    <button type="button" onclick="saveChanges('{{ $vacancy->id }}')"
-                        style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">Зберегти
-                        зміни
+                        
+                        <button type="button"
+                        onclick="saveChanges('{{ $vacancy->id }}'); generatePDF('{{ $vacancy->id }}');"
+                        style="background-color: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                        Зберегти зміни та згенерувати PDF
                     </button>
+                    
+                        
+                    <br>
+                    
+                    
 
 
 
             </div>
             </form>
+            
 
         </div>
     </div>
@@ -549,9 +607,10 @@ function closePDFEditor(vacancyId) {
 
     <script>
        
+// Для Lightbox
 
+function saveChanges(vacancyId) {
 
-        function saveChanges(vacancyId) {
             // Збираємо дані з форми
             var formData = {
                 status: document.getElementById('statusInput_' + vacancyId).value,

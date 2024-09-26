@@ -14,7 +14,7 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
       <div class="sidebar-brand-icon">
           <!-- Ваш логотип у форматі зображення -->
-          <img src="{{ asset('admin_assets/img/logom.svg') }}" alt="Логотип" style="max-width: 100%; height: 200px;">
+          <img src="{{ asset('admin_assets/img/logom.svg') }}" alt="Логотип" style="max-width: 100%; height: 160px;">
       </div>
       
   </a>
@@ -49,13 +49,21 @@
         <span>Проекти</span>
     </a>
 </li>
-  
+
   <li class="nav-item">
       <a class="nav-link" href="/profile">
           <i class="fas fa-fw fa-user"></i>
           <span>Профіль</span>
       </a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('team') }}">
+        <i class="fas fa-fw fa-user"></i>
+        <span>Команда</span>
+    </a>
+</li>
+  
+  
   
     
     <!-- Divider -->

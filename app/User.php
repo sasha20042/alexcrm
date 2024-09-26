@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password',  'address', 'personal_phone', 'work_phone_1', 'work_phone_2', 'photo', 'social_media',
     ];
 
     /**
@@ -35,5 +35,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'social_media' => 'array', // Автоматичне кастування поля social_media у масив
     ];
 }

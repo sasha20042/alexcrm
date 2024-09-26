@@ -43,26 +43,55 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-{
-    $request->validate([
-        'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048', // Валідація для кожного фото
-    ]);
-  
-    $project = Project::create($request->all());
-
-    if ($request->hasFile('photos')) {
-        $photos = [];
-        foreach ($request->file('photos') as $photo) {
-            $path = $photo->store('photos', 'public'); // Зберігаємо фото в папці 'public/photos'
-            $photos[] = $path;
-        }
-        $project->photos = json_encode($photos);
-        $project->save();
-    }
-
-    return redirect()->route('project')->with('success', 'Добавив, харош!');
-}
+    
+     public function store(Request $request)
+     {
+         // Валідація для всіх категорій фото
+         $request->validate([
+             'photos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+             'housing_photos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+             'production_photos.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+         ]);
+     
+         // Створюємо новий проект
+         $project = Project::create($request->all());
+     
+         // Обробка і збереження фото загальної категорії (photos)
+         if ($request->hasFile('photos')) {
+             $photos = [];
+             foreach ($request->file('photos') as $photo) {
+                 $path = $photo->store('photos', 'public'); // Зберігаємо фото в папці 'public/photos'
+                 $photos[] = $path;
+             }
+             $project->photos = json_encode($photos);
+         }
+     
+         // Обробка і збереження фото житла (housing_photos)
+         if ($request->hasFile('housing_photos')) {
+             $housing_photos = [];
+             foreach ($request->file('housing_photos') as $photo) {
+                 $path = $photo->store('photos', 'public'); // Зберігаємо фото в тій самій папці 'public/photos'
+                 $housing_photos[] = $path;
+             }
+             $project->housing_photos = json_encode($housing_photos);
+         }
+     
+         // Обробка і збереження фото з місця виробництва (production_photos)
+         if ($request->hasFile('production_photos')) {
+             $production_photos = [];
+             foreach ($request->file('production_photos') as $photo) {
+                 $path = $photo->store('photos', 'public'); // Зберігаємо фото в тій самій папці 'public/photos'
+                 $production_photos[] = $path;
+             }
+             $project->production_photos = json_encode($production_photos);
+         }
+     
+         // Зберігаємо всі зміни
+         $project->save();
+     
+         return redirect()->route('project')->with('success', 'Добавив, харош!');
+     }
+     
   
     /**
      * Display the specified resource.

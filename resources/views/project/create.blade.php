@@ -61,15 +61,7 @@
             background-color: #0056b3;
         }
 
-        .btn-add-contact {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
+      
         .contact-block {
             background-color: #f1f1f1;
             padding: 20px;
@@ -128,11 +120,7 @@
             @csrf
 
             <div class="row mb-3">
-                <div class="col-half">
-                    <label for="countrySelect" class="form-label">Країна:</label>
-                    <input type="text" id="countrySelect" name="country" class="form-control" required>
-                   
-                </div>
+                
                 
                 <div class="col-half">
                     <label for="companySelect" class="form-label">Агенція:</label>
@@ -141,10 +129,17 @@
                         <option value="new">Додати нову агенцію</option>
                     </select>
                 </div>
+                
             </div>
 
             <div id="newCompanyFields" style="display: none;">
+                
                 <div class="row mb-3">
+                    <div class="col-half">
+                        <label for="countrySelect" class="form-label">Країна:</label>
+                        <input type="text" id="countrySelect" name="country" class="form-control" required>
+                       
+                    </div>
                     <div class="col-full">
                         <label for="newCompanyName" class="form-label">Назва нової агенції:</label>
                         <input type="text" name="new_company" id="newCompanyName" class="form-control" placeholder="Назва нової агенції">
@@ -154,12 +149,14 @@
                         <label for="newCompanyCity" class="form-label">Місце розташування агенції:</label>
                         <input type="text" name="new_company_city" id="newCompanyCity" class="form-control" placeholder="Місце розташування">
                     </div>
+                    
                 </div>
 
                 <div id="contactBlocks">
                     <div class="contact-block">
                         <h4>Контакти</h4>
                         <div class="row mb-3">
+                            
                             <div class="col-half">
                                 <label for="contactName" class="form-label">Ім'я:</label>
                                 <input type="text" name="contact_name[]" class="form-control" placeholder="Ім'я">
@@ -182,7 +179,9 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn-add-contact">+ Додати ще одного контакта</button>
+                <button type="button" class="btn btn-success mt-3">+ Додати ще одного контакта</button>
+                <button type="button" class="btn btn-secondary mt-3" id="addJobDetailsBtn">Додати вакансію</button>
+
             </div>
 
             <div id="jobDetailsFields" style="display: none;">
@@ -194,7 +193,7 @@
                             <option value="inactive">Не активний</option>
                         </select>
                     </div>
-            
+                    
                     
                 </div>
             
@@ -280,6 +279,13 @@
                     <div class="col-full">
                         <label for="photos" class="form-label">Фотографії:</label>
                         <input type="file" name="photos[]" id="photos" class="form-control" multiple>
+
+                        <label for="housing_photos">Фото житла:</label>
+                        <input type="file" name="housing_photos[]" id="housing_photos" multiple>
+                        
+                        <!-- Фото з місця виробництва -->
+                        <label for="production_photos">Фото з місця виробництва:</label>
+                        <input type="file" name="production_photos[]" id="production_photos" multiple>
                         <small class="text-muted">Максимум 10 фото. Дозволені формати: jpg, png, jpeg.</small>
                     </div>
                 </div>
@@ -323,19 +329,23 @@
         });
             
     
-            $('#companySelect').on('change', function () {
-                var selectedOption = $(this).val();
-                if (selectedOption === 'new') {
-                    $('#newCompanyFields').show();
-                    $('#jobDetailsFields').show();
-                } else if (selectedOption) {
-                    $('#jobDetailsFields').show();
-                    $('#newCompanyFields').hide();
-                } else {
-                    $('#jobDetailsFields').hide();
-                    $('#newCompanyFields').hide();
-                }
-            });
+        $('#companySelect').on('change', function () {
+        var selectedOption = $(this).val();
+        if (selectedOption === 'new') {
+            $('#newCompanyFields').show();
+            $('#jobDetailsFields').hide(); // Ховаємо поле вакансії до натискання кнопки
+        } else if (selectedOption) {
+            $('#jobDetailsFields').show();
+            $('#newCompanyFields').hide();
+        } else {
+            $('#jobDetailsFields').hide();
+            $('#newCompanyFields').hide();
+        }
+    });
+
+    $('#addJobDetailsBtn').on('click', function() {
+        $('#jobDetailsFields').show(); // Показуємо поле вакансії після натискання кнопки
+    });
     
             $('.btn-add-contact').on('click', function () {
                 var newContactBlock = `
